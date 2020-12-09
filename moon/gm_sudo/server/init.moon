@@ -12,6 +12,3 @@
             -- Prevent sudo user from connecting to EGP, Keyboard, etc. or giving permissions to starfall (and revoke all existing)
         -- If private key does not match, log the violation and start rate limiting (leading to a ban) from a player if they try too often
     -- update: just using passwords, stored with bcrypt, stored in sv.db
-
-export Sudo
-Sudo = {}
