@@ -35,4 +35,4 @@ class UserStorage
             WHERE steam_id = %s
         ]], @tableName, steamId
 
-UserStorage
+UserStorage!
