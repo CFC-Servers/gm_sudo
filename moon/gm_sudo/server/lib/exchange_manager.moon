@@ -84,9 +84,13 @@ class ExchangeManager
             :lifetime
             :sent
 
+        @_sendPrompt target
+
     remove: (target) =>
         @sessions[target] = nil
 
+    -- Acts as a verification layer
+    -- Children should extend this method with business logic
     receiveResponse: (target) =>
         @_verifySession target
         @_stopRemovalTimer target

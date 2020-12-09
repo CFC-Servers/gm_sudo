@@ -13,14 +13,15 @@ class UserStorage
             CREATE TABLE IF NOT EXISTS %s(
                 steam_id TEXT    PRIMARY KEY NOT NULL,
                 digest   TEXT    NOT NULL,
+                salt     TEXT
                 active   BOOLEAN DEFAULT 1
             )
         ]], @tableName
 
-    store: (steamId, digest) =>
+    store: (steamId, digest, salt) =>
         Query format [[
-            INSERT OR REPLACE INTO %s (steam_id, digest) VALUES(%s, %s)
-        ]], @tableName, steamId, digest
+            INSERT OR REPLACE INTO %s (steam_id, digest, salt) VALUES(%s, %s, %s)
+        ]], @tableName, steamId, digest, salt
 
     delete: (steamId) =>
         Query format [[
@@ -28,9 +29,9 @@ class UserStorage
             WHERE steam_id = %s
         ]], @tableName, steamId
 
-    getDigest: (steamId) =>
+    get: (steamId) =>
         Query format [[
-            SELECT digest
+            SELECT digest, salt
             FROM %s
             WHERE steam_id = %s
         ]], @tableName, steamId
