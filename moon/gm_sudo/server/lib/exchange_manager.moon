@@ -4,6 +4,7 @@ import Base64Encode from util
 class ExchangeManager
     new: =>
         @sessions = {}
+        @maxAttempts = 3
         @tokenSize = 16
         @sessionLifetime = 120
         @promptMessage = nil
@@ -49,6 +50,13 @@ class ExchangeManager
             @start target
             return false
 
+    _verifyAttempts: (target) =>
+        target = target\SteamID64!
+        session = @sessions[target]
+
+        if session.attempts >= @maxAttempts
+            error "Ran out of attempts! Person: #{target}"
+
     -- If the token is wrong, something is sus
     _verifyToken: (target, givenToken) =>
         target = target\SteamID64!
@@ -82,6 +90,7 @@ class ExchangeManager
     receiveResponse: (target) =>
         @_verifySession target
         @_stopRemovalTimer target
+        @_verifyAttempts target
 
         return unless @_verifyLifetime(target) == nil
 
