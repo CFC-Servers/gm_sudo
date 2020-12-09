@@ -13,8 +13,9 @@ class EncryptionInterface
         saltFile = "gm_sudo_salt.txt"
 
         if not Exists saltFile
-            with Base64Encode random.Bytes, 64
-                Write saltfile, self
+            with salt = Base64Encode random.Bytes, 64
+                Write saltfile, salt
+                return salt
 
         with Read saltFile
             Replace self, "\r", ""
