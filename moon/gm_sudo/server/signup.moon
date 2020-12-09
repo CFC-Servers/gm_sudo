@@ -1,16 +1,15 @@
-SessionManager = require "lib/exchange_manager.lua"
+ExchangeManager = require "lib/exchange_manager.lua"
 Encryption = require "encryption.lua"
 UserStorage = require "storage.lua"
 
 networkMessage = "GmodSudo_SignUp"
 util.AddNetworkString networkMessage
 
-class SignUpManager extends SessionManager
-    new: (signUpSuccess) =>
+class SignUpManager extends ExchangeManager
+    new: =>
         super!
         @sessionLifetime = 180
         @promptMessage = networkMessage
-        @onSuccess = signUpSuccess
         @_createListener!
 
     _timerName: (target) =>
@@ -18,10 +17,11 @@ class SignUpManager extends SessionManager
 
     receiveResponse: (target) =>
         super!
-        digest = Encryption\digest net.ReadString!
-        -- TODO: some verification here
-        Storage\store target\SteamID64!, digest
+        digest, salt = Encryption\digest net.ReadString!
 
-        @onSuccess target
+        -- TODO: some verification here
+        Storage\store target\SteamID64!, digest, salt
+
+        @onSuccess and @onSuccess target
 
 SignUpManager!

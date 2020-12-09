@@ -6,20 +6,23 @@ networkMessage = "GmodSudo_SignIn"
 util.AddNetworkString networkMessage
 
 class SignInManager extends ExchangeManager
-    new: (signInSuccess) =>
+    new: =>
         super!
         @sessionLifetime = 60
         @promptMessage = networkMessage
-        @onSuccess = signInSuccess
         @_createListener!
 
     _timerName: (target) =>
         "GmodSudo_SignInTimeout_#{target}"
 
     _verifyPassword: (password, target) =>
+        target = target\SteamID64!
+        data = UserStorage\get target
+
         Encryption\verify(
             password,
-            UserStorage\getDigest target\SteamID64!
+            data.digest,
+            data.salt
         )
 
     receiveResponse: (target) =>
@@ -29,6 +32,6 @@ class SignInManager extends ExchangeManager
             -- TODO: Some alert here
             return @start target
 
-        @signInSuccess target
+        @onSuccess and @onSuccess target
 
 SignInManager!
