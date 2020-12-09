@@ -1,7 +1,11 @@
+Sudo =
+    SignUpManager: require "signup.lua"
+    SignInManager: require "signin.lua"
 
 class SudoController
     new: =>
-        -- keep
 
-    login: (ply, passsword) =>
+    login: (ply) =>
         -- send prompt to do the login
+
+Sudo.SudoController = SudoController!
