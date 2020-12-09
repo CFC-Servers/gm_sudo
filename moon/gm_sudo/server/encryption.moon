@@ -13,7 +13,7 @@ class EncryptionInterface
         saltFile = "gm_sudo_salt.txt"
 
         if not Exists saltFile
-            return with Base64Encode random.Bytes, 64
+            with Base64Encode random.Bytes, 64
                 Write saltfile, self
 
         with Read saltFile
