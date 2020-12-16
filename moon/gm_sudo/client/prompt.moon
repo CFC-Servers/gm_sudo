@@ -12,10 +12,14 @@ CreateFont "GmodSudo_SudoStandardFont",
 
 include "elements/sudo_panel.lua"
 
+lastRequest = os.time!
 requestSudo = ->
     Logger\debug "Requesting Sudo access!"
+    return if os.time! < lastRequest + 10
 
     net.Start "GmodSudo_RequestSignIn"
     net.SendToServer!
+
+    lastRequest = os.time!
 
 concommand.Add "sudo", requestSudo
