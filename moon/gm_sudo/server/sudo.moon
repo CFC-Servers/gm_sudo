@@ -1,6 +1,4 @@
 util.AddNetworkString "GmodSudo_RequestSignIn"
-util.AddNetworkString "GmodSudo_SignIn"
-util.AddNetworkString "GmodSudo_SignUp"
 
 class SudoManager
     new: (ply, duration=30*60) =>
