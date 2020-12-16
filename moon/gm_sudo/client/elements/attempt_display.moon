@@ -1,6 +1,8 @@
 import Text from draw
 import DrawRect, SetDrawColor from surface
 
+import Logger from Sudo
+
 Colors =
     white: Color 255, 255, 255, 255
     gray: Color 50, 50, 50, 255
@@ -10,6 +12,8 @@ AttemptDisplay =
     Init: => -- no-op
 
     Setup: (maxAttempts, attemptCount)=>
+        Logger\debug "Running AttemptDisplay Setup: #{maxAttempts}, #{attemptCount}"
+
         @maxAttempts = maxAttempts
         @attemptCount = attemptCount
 

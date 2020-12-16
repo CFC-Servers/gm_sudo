@@ -1,20 +1,26 @@
+import Logger from Sudo
+
 util.AddNetworkString "GmodSudo_RequestSignIn"
 
 class SudoManager
     new: (ply, duration=30*60) =>
+        Logger\debug "New Sudo session for #{ply\SteamID64!}"
+
         @ply = ply
         @duration = duration
         @wrapSuperadmin!
 
     wrapSuperadmin: =>
-        expiration = os.time! + @duration
-        @originalSuperadmin = ply.IsSuperAdmin
+        Logger\debug "Wrapping superadmin for #{@ply\SteamID64!}"
 
-        ply.IsSuperAdmin = ->
+        expiration = os.time! + @duration
+        @originalSuperadmin = @ply.IsSuperAdmin
+
+        @ply.IsSuperAdmin = ->
             now = os.time!
             return true unless now >= expiration
 
-            ply.IsSuperAdmin = @originalSuperadmin
+            @ply.IsSuperAdmin = @originalSuperadmin
             return @originalSuperadmin @ply
 
 Sudo =
@@ -22,7 +28,11 @@ Sudo =
     SignInManager: require "signin.lua"
 
 Sudo.SignInManager.onSuccess = (target) =>
+    Logger\debug "SignInManager success, creating new SudoManager instance"
+
     SudoManager target
 
 net.Receive "GmodSudo_RequestSignIn", (_, ply) ->
-    Sudo.SignUpManager\start ply, ply
+    Logger\debug "Received sign in request, creating new SignInManager instance"
+
+    Sudo.SignInManager\start ply, ply

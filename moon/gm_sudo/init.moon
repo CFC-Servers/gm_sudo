@@ -1,3 +1,22 @@
+require "cfclogger"
+
+Sudo = {}
+
+if CFCLogger
+    Sudo.Logger = CFCLogger "Sudo"
+else
+    log = (level) ->
+        (_, ...) ->
+            print "[GmodSudo] ", "[#{level}]", ...
+
+    Sudo.Logger =
+        trace: log "trace"
+        debug: log "debug"
+        info: log "info"
+        warn: log "warn"
+        error: error
+        fatal: error
+
 if SERVER
     include "server/init.lua"
 
