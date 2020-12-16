@@ -19,7 +19,7 @@ class SudoManager
 
 Sudo =
     SignUpManager: require "signup.lua"
-    SignInManager:  require "signin.lua"
+    SignInManager: require "signin.lua"
 
 Sudo.SignInManager.onSuccess = (target) =>
     SudoManager target

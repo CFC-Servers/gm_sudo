@@ -1,1 +1,1 @@
-include "gm_sudo/server/init.lu"
+include "gm_sudo/server/init.lua"

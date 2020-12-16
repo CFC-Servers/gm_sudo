@@ -1,1 +1,1 @@
-include "gm_sudo/shared/init.lua"
+include "gm_sudo/init.lua"
