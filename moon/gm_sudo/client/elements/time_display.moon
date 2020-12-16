@@ -11,8 +11,17 @@ drawCirclePoly = (x, y, r, startAng, endAng) ->
 
         insert poly, {x: dx, y: dy}
 
+Colors =
+    circleColor: Color 36, 41, 67, 255
+    white: Color 255, 255, 255, 255
+
 TimeDisplay =
-    Init: =>
+    Init: => -- no-op
+
+    Setup: (lifetime) =>
+        @lifetime = lifetime
+        @startTime = RealTime!
+
         @Dock LEFT
         @DockMargin 0, 16, 0, 0
         @SetSize 64, 64
@@ -20,20 +29,19 @@ TimeDisplay =
     Paint: (w, h) =>
         NoTexture!
 
-        parent = @GetParent!
-        promptTime = parent.promptTime
-        timeDiff = RealTime! - parent.startTime
-        timeLeft = promptTime - timeDiff
+        timeDiff = RealTime! - @startTime
+        timeLeft = @lifetime - timeDiff
 
+        -- TODO: Send alert that the prompt timed out
         parent\Close! unless timeLeft > 0
 
-        circleAngle = timeLeft / promptTime * 360
-        circleColor = HSVToColor timeLeft / promptTime * 120, 0.75, 1
+        circleAngle = timeLeft / lifetime * 360
+        circleColor = HSVToColor timeLeft / lifetime * 120, 0.75, 1
 
         SetDrawColor circleColor
         drawCirclePoly w / 2, h / 2, 32, 0, circleAngle
 
-        SetDrawColor Color 36, 41, 67, 255
+        SetDrawColor Colors.circleColor
         drawCirclePoly w / 2, h / 2, 26, 0, 360
 
         Text
@@ -42,6 +50,6 @@ TimeDisplay =
             pos: {w / 2, h / 2}
             xalign: TEXT_ALIGN_CENTER
             yalign: TEXT_ALIGN_CENTER
-            color: Color 255, 255, 255, 255
+            color: Colors.white
 
 vgui.Register "GmodSudo_TimeDisplay", TimeDisplay, "DPanel"

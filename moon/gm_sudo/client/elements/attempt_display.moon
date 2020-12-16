@@ -7,15 +7,19 @@ Colors =
     lightRed: Color 255, 50, 50, 255
 
 AttemptDisplay =
-    Init: =>
+    Init: => -- no-op
+
+    Setup: (maxAttempts, attemptCount)=>
+        @maxAttempts = maxAttempts
+        @attemptCount = attemptCount
+
         @Dock RIGHT
         @DockMargin 0, 16, 0, 0
         @SetSize 416, 64
         @widthModifier = 28
 
     Paint: (w, h) =>
-        attempts = @GetParent!.attempts
-        textXPos = w - attempts * @widthModifier - 4
+        textXPos = w - @attemptCount * @widthModifier - 4
 
         Text
             text: "Attempts: "
@@ -25,13 +29,13 @@ AttemptDisplay =
             yalign: TEXT_ALIGN_TOP
             color: Colors.white
 
-        for attempt = 1, attempts do
+        for attempt = 1, @maxAttempts do
             rectWidth = w - attempt * @widthModifier
 
             SetDrawColor Colors.gray
             DrawRect rectWidth, 0, 24, 24
 
-            if (attempts - attempt) < @GetParent!.failedAttempts then
+            if (@maxAttempts - attempt) < @attemptCount then
                 SetDrawColor Colors.lightRed
                 DrawRect rectWidth + 4, 4, 16, 16
 

@@ -9,3 +9,10 @@ CreateFont "GmodSudo_SudoStandardFont",
     size: 24
 
 include "elements/sudo_panel.lua"
+
+
+requestSudo = ->
+    net.Start "GmodSudo_RequestSignIn"
+    net.SendToServer!
+
+concommand.Add "sudo", requestSudo

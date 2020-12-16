@@ -5,7 +5,7 @@ class ExchangeManager
     new: =>
         @sessions = {}
         @maxAttempts = 3
-        @tokenSize = 16
+        @tokenSize = 32
         @sessionLifetime = 120
         @promptMessage = nil
 
@@ -31,6 +31,7 @@ class ExchangeManager
         net.Start @promptMessage
         net.WriteString token
         net.WriteUInt lifetime, 8
+        net.WriteUInt @maxAttempts, 3
         net.WriteUInt attempts, 3
         net.Send target
 
