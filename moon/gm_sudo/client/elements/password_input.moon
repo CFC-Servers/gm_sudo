@@ -12,7 +12,7 @@ PasswordInput =
         @SetSize 480, 32
         @SetMultiline true
         @SetEnterAllowed false
-        @lastAttempt = 0
+        @lastAttempt = RealTime!
 
     Paint: (w, h) =>
         timeDiff = min RealTime! - @lastAttempt, 2
@@ -30,28 +30,12 @@ PasswordInput =
             color: Colors.white
 
     AllowInput: (char) =>
-        return false if char == "\n"
+        return unless char == "\n"
 
         @OnEnter @GetValue!
-
-        true
+        return true
 
     OnEnter: (str) =>
-        -- TODO: Validation here
-        isValid = str == "Cheese"
-
-        if isValid
-            -- TODO: Send request
-
-            return @GetParent!\Close!
-
-        @lastAttempt = RealTime!
-
-        parent = @GetParent!
-        return unless parent.failedAttempts
-
-        parent.failedAttempts += 1
-
-        return parent\Close! if parent.failedAttempts == parent.attempts
+        @GetParent!\OnSubmit str
 
 vgui.Register "GmodSudo_PasswordInput", PasswordInput, "DTextEntry"

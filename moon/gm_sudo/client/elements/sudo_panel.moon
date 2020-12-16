@@ -1,5 +1,6 @@
 import RoundedBox from draw
 
+include "loading_panel.lua"
 include "attempt_display.lua"
 include "password_input.lua"
 include "time_display.lua"
@@ -7,8 +8,19 @@ include "time_display.lua"
 Colors =
     cfcPrimary: Color 36, 41, 67, 255
 
+local PasswordPanel
+local LoadingPanel
+
 SudoPasswordPanel =
-    Init: =>
+    Init: => -- no-op
+
+    Setup: (token, lifetime, maxAttempts, attemptCount, responseMessage) =>
+        @token = token
+        @lifetime = lifetime
+        @maxAttempts = maxAttempts
+        @attemptCount = attemptCount
+        @responseMessage = responseMessage
+
         w, h = 512, 192
 
         xPos = ScrW! - w - 32
@@ -27,21 +39,48 @@ SudoPasswordPanel =
             \SetText "Enter password for sudo access: "
             \SetFont "GmodSudo_SudoStandardFont"
 
-        vgui.Create "GmodSudo_PasswordInput", self
+        @input = vgui.Create "GmodSudo_PasswordInput", self
 
-    SetPromptTime: (promptTime) =>
-        @startTime = RealTime!
-        @promptTime = promptTime
+        @timeDisplay = vgui.Create "GmodSudo_TimeDisplay", self
+        @timeDisplay\Setup @lifetime
 
-        vgui.Create "GmodSudo_TimeDisplay", self
-
-    SetAttemptCount: (attempts) =>
-        @attempts = attempts
-        @failedAttempts = 0
-
-        vgui.Create "GmodSudo_AttemptDisplay", self
+        @attemptDisplay = vgui.Create "GmodSudo_AttemptDisplay", self
+        @attemptDisplay\Setup @maxAttempts, @attemptCount
 
     Paint: (w, h) =>
         RoundedBox 8, 0, 0, w, h, Colors.cfcPrimary
+
+    OnSubmit: (password) =>
+        isValid = password ~= ""
+
+        -- TODO: Clientside validation
+
+        if isValid
+            net.Start @responseMessage
+            net.WriteString @token
+            net.WriteString password
+            net.SendToServer!
+
+            self\Remove!
+            LoadingPanel = vgui.Create "GmodSudo_LoadingPanel"
+
+            return
+
+        -- TODO: Handle invalid input
+
+net.Receive "GmodSudo_SignIn", ->
+    if PasswordPanel
+        PasswordPanel\Remove!
+
+    if LoadingPanel
+        LoadingPanel\Remove!
+
+    token = net.ReadString!
+    lifetime = net.ReadUInt 8
+    maxAttempts = net.ReadUInt 3
+    attemptCount = net.ReadUInt 3
+
+    PasswordPanel = vgui.Create "GmodSudo_PasswordPanel"
+    PasswordPanel\Setup token, lifetime, maxAttempts, attemptCount, "GmodSudo_SignIn"
 
 vgui.Register "GmodSudo_PasswordPanel", SudoPasswordPanel, "DFrame"

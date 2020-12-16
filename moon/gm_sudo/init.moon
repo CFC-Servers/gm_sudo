@@ -3,6 +3,8 @@ if SERVER
 
     AddCSLuaFile "client/init.lua"
     AddCSLuaFile "client/prompt.lua"
+    AddCSLuaFile "client/elements/sudo_panel.lua"
+    AddCSLuaFile "client/elements/loading_panel.lua"
     AddCSLuaFile "client/elements/attempt_display.lua"
     AddCSLuaFile "client/elements/password_input.lua"
     AddCSLuaFile "client/elements/time_display.lua"
