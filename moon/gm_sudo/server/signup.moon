@@ -1,3 +1,5 @@
+import Logger from Sudo
+
 ExchangeManager = require "lib/exchange_manager.lua"
 Encryption = require "encryption.lua"
 UserStorage = require "storage.lua"
@@ -16,6 +18,8 @@ class SignUpManager extends ExchangeManager
         "GmodSudo_SignUpTimeout_#{target}"
 
     receiveResponse: (target) =>
+        Logger\debug "Received response in SignUpManager"
+
         super!
         digest, salt = Encryption\digest net.ReadString!
 

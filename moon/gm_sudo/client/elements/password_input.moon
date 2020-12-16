@@ -2,11 +2,15 @@ import RoundedBox, Text from draw
 import min from math
 import len, rep from string
 
+import Logger from Sudo
+
 Colors =
     white: Color 255, 255, 255, 255
 
 PasswordInput =
     Init: =>
+        Logger\debug "Running Init in PasswordInput"
+
         @Dock TOP
         @DockMargin 0, 16, 0, 0
         @SetSize 480, 32
@@ -30,12 +34,16 @@ PasswordInput =
             color: Colors.white
 
     AllowInput: (char) =>
+        Logger\debug "Running AllowInput in PasswordInput"
+
         return unless char == "\n"
 
         @OnEnter @GetValue!
         return true
 
     OnEnter: (str) =>
+        Logger\debug "Running OnEnter in PasswordInput"
+
         @GetParent!\OnSubmit str
 
 vgui.Register "GmodSudo_PasswordInput", PasswordInput, "DTextEntry"

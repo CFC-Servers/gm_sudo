@@ -1,3 +1,5 @@
+import Logger from Sudo
+
 ExchangeManager = require "lib/exchange_manager.lua"
 Encryption = require "encryption.lua"
 UserStorage = require "storage.lua"
@@ -16,6 +18,8 @@ class SignInManager extends ExchangeManager
         "GmodSudo_SignInTimeout_#{target}"
 
     _verifyPassword: (password, target) =>
+        Logger\debug "Verifying password in SignInManager"
+
         target = target\SteamID64!
         data = UserStorage\get target
 
@@ -26,6 +30,7 @@ class SignInManager extends ExchangeManager
         )
 
     receiveResponse: (target) =>
+        Logger\debug "Received response in SignInManager"
         super!
 
         if not @_verifyPassword target, net.ReadString!

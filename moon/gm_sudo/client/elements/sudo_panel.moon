@@ -1,5 +1,7 @@
 import RoundedBox from draw
 
+import Logger from Sudo
+
 include "loading_panel.lua"
 include "attempt_display.lua"
 include "password_input.lua"
@@ -15,6 +17,8 @@ SudoPasswordPanel =
     Init: => -- no-op
 
     Setup: (token, lifetime, maxAttempts, attemptCount, responseMessage) =>
+        Logger\debug "Running Setup in SudoPasswordPanel: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}, #{responseMessage}"
+
         @token = token
         @lifetime = lifetime
         @maxAttempts = maxAttempts
@@ -51,6 +55,8 @@ SudoPasswordPanel =
         RoundedBox 8, 0, 0, w, h, Colors.cfcPrimary
 
     OnSubmit: (password) =>
+        Logger\debug "Running OnSubmit in SudoPasswordPanel"
+
         isValid = password ~= ""
 
         -- TODO: Clientside validation
@@ -69,6 +75,8 @@ SudoPasswordPanel =
         -- TODO: Handle invalid input
 
 net.Receive "GmodSudo_SignIn", ->
+    Logger\debug "Received SignIn request, clearing panels and reading data"
+
     if PasswordPanel
         PasswordPanel\Remove!
 
@@ -79,6 +87,8 @@ net.Receive "GmodSudo_SignIn", ->
     lifetime = net.ReadUInt 8
     maxAttempts = net.ReadUInt 3
     attemptCount = net.ReadUInt 3
+
+    Logger\debug "SignIn request data: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}"
 
     PasswordPanel = vgui.Create "GmodSudo_PasswordPanel"
     PasswordPanel\Setup token, lifetime, maxAttempts, attemptCount, "GmodSudo_SignIn"
