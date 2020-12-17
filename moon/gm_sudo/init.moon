@@ -1,6 +1,6 @@
 require "cfclogger"
 
-Sudo = {}
+export Sudo = {}
 
 if CFCLogger
     Sudo.Logger = CFCLogger "Sudo"
