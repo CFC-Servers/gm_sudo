@@ -1,4 +1,4 @@
-import TableExists, Query from sql
+import TableExists, Query, QueryRow from sql
 import format from string
 
 import Logger from Sudo
@@ -25,25 +25,31 @@ class UserStorage
     store: (steamId, digest, salt) =>
         Logger\debug "Storing: #{steamId} | #{digest} | #{salt}"
 
-        Query format [[
+        result = Query format [[
             INSERT OR REPLACE INTO %s (steam_id, digest, salt) VALUES(%s, %s, %s)
         ]], @tableName, steamId, digest, salt
+
+        error sql.LastError! if result == false else result
 
     delete: (steamId) =>
         Logger\debug "Deleting: #{steamId}"
 
-        Query format [[
+        result = Query format [[
             DELETE FROM %s
             WHERE steam_id = %s
         ]], @tableName, steamId
 
+        error sql.LastError! if result == false else result
+
     get: (steamId) =>
         Logger\debug "Getting: #{steamId}"
 
-        Query format [[
+        result = QueryRow format [[
             SELECT digest, salt
             FROM %s
             WHERE steam_id = %s
         ]], @tableName, steamId
+
+        error sql.LastError! if result == false else result
 
 UserStorage!
