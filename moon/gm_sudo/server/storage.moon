@@ -26,7 +26,7 @@ class UserStorage
         Logger\debug "Storing: #{steamId} | #{digest} | #{salt}"
 
         result = Query format [[
-            INSERT OR REPLACE INTO %s (steam_id, digest, salt) VALUES('%s', '%s', '%s')
+            INSERT OR REPLACE INTO %s (steam_id, digest, salt) VALUES(%s, %s, %s)
         ]], @tableName, SQLStr(steamId), SQLStr(digest), SQLStr(salt)
 
         error sql.LastError! if result == false else result
