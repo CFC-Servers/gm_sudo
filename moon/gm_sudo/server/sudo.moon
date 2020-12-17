@@ -1,4 +1,4 @@
-import GetBySteamId from player
+import GetBySteamID from player
 
 import Logger from Sudo
 
@@ -46,6 +46,6 @@ concommand.Add "sudoadd", (ply, cmd, args) ->
     return if IsValid ply
 
     steamId = args[1]
-    target = GetBySteamId steamId
+    target = GetBySteamID steamId
 
     Sudo.SignUpManager\start "Console", target
