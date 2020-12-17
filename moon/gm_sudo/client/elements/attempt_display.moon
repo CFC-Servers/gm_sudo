@@ -11,7 +11,7 @@ Colors =
 AttemptDisplay =
     Init: => -- no-op
 
-    Setup: (maxAttempts, attemptCount)=>
+    Setup: (maxAttempts, attemptCount) =>
         Logger\debug "Running AttemptDisplay Setup: #{maxAttempts}, #{attemptCount}"
 
         @maxAttempts = maxAttempts
