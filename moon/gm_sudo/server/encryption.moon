@@ -11,11 +11,11 @@ class EncryptionInterface
 
     salt: => Base64Encode random.Bytes, @saltLength
 
-    digest: (password, salt=true) =>
+    digest: (password) =>
         Logger\debug "Generating digest"
-        generatedSalt = salt and @salt! or ""
+        generatedSalt = @salt!
 
-        sha.sha3_512 "#{password}#{generatedSalt}"
+        sha.sha3_512("#{password}#{generatedSalt}"), generatedSalt
 
     verify: (password, digest, salt="") =>
         Logger\debug "Verifying digest: #{digest}"
