@@ -1,4 +1,4 @@
-import NoTexture from draw
+import NoTexture, Text from draw
 import ceil, cos, pi, sin from math
 import SetDrawColor from surface
 import insert from table
