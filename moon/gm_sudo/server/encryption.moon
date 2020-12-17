@@ -9,11 +9,9 @@ class EncryptionInterface
     new: (logRounds=12, saltLength=64) =>
         @saltLength = saltLength
 
-    salt: => Base64Encode random.Bytes, @saltLength
-
     digest: (password) =>
         Logger\debug "Generating digest"
-        generatedSalt = @salt!
+        generatedSalt = Base64Encode random.Bytes!, 32
 
         sha.sha3_512("#{password}#{generatedSalt}"), generatedSalt
 
