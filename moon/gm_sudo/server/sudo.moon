@@ -1,3 +1,5 @@
+import GetBySteamId from player
+
 import Logger from Sudo
 
 util.AddNetworkString "GmodSudo_RequestSignIn"
@@ -32,7 +34,18 @@ Sudo.SignInManager.onSuccess = (target) =>
 
     SudoManager target
 
+Sudo.SignUpManager.onSuccess = (target) =>
+    Logger\info "SignUp success!"
+
 net.Receive "GmodSudo_RequestSignIn", (_, ply) ->
     Logger\debug "Received sign in request, creating new SignInManager instance"
 
     Sudo.SignInManager\start ply, ply
+
+concommand.Add "sudoadd", (ply, cmd, args) ->
+    return if IsValid ply
+
+    steamId = args[1]
+    target = GetBySteamId steamId
+
+    Sudo.SignUpManager\start "Console", target

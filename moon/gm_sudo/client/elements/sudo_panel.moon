@@ -10,20 +10,14 @@ include "time_display.lua"
 Colors =
     cfcPrimary: Color 36, 41, 67, 255
 
-local PasswordPanel
+local ExchangePanel
 local LoadingPanel
 
 SudoPasswordPanel =
     Init: => -- no-op
 
-    Setup: (token, lifetime, maxAttempts, attemptCount, responseMessage) =>
-        Logger\debug "Running Setup in SudoPasswordPanel: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}, #{responseMessage}"
-
-        @token = token
-        @lifetime = lifetime
-        @maxAttempts = maxAttempts
-        @attemptCount = attemptCount
-        @responseMessage = responseMessage
+    Setup: (@token, @lifetime, @maxAttempts, @attemptCount, @responseMessage, @showLifetime=true, @showAttempts=true) =>
+        Logger\debug "Running Setup in SudoPasswordPanel: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}, #{responseMessage}, #{showLifetime}, #{showAttempts}"
 
         w, h = 512, 192
 
@@ -45,11 +39,13 @@ SudoPasswordPanel =
 
         @input = vgui.Create "GmodSudo_PasswordInput", self
 
-        @timeDisplay = vgui.Create "GmodSudo_TimeDisplay", self
-        @timeDisplay\Setup @lifetime
+        if @showLifetime
+            with @timeDisplay = vgui.Create "GmodSudo_TimeDisplay", self
+                \Setup @lifetime
 
-        @attemptDisplay = vgui.Create "GmodSudo_AttemptDisplay", self
-        @attemptDisplay\Setup @maxAttempts, @attemptCount
+        if @showAttempts
+            with @attemptDisplay = vgui.Create "GmodSudo_AttemptDisplay", self
+                \Setup @maxAttempts, @attemptCount
 
     Paint: (w, h) =>
         RoundedBox 8, 0, 0, w, h, Colors.cfcPrimary
@@ -74,23 +70,24 @@ SudoPasswordPanel =
 
         -- TODO: Handle invalid input
 
-net.Receive "GmodSudo_SignIn", ->
-    Logger\debug "Received SignIn request, clearing panels and reading data"
-
-    if PasswordPanel
-        PasswordPanel\Remove!
-
-    if LoadingPanel
-        LoadingPanel\Remove!
-
-    token = net.ReadString!
-    lifetime = net.ReadUInt 8
-    maxAttempts = net.ReadUInt 3
-    attemptCount = net.ReadUInt 3
-
-    Logger\debug "SignIn request data: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}"
-
-    PasswordPanel = vgui.Create "GmodSudo_PasswordPanel"
-    PasswordPanel\Setup token, lifetime, maxAttempts, attemptCount, "GmodSudo_SignIn"
-
 vgui.Register "GmodSudo_PasswordPanel", SudoPasswordPanel, "DFrame"
+
+newExchange = (message, bellsAndWhistles=true) ->
+    net.Receive message, ->
+        Logger\debug "Received '#{message}' request, clearing panels and reading data"
+
+        ExchangePanel\Remove! if ExchangePanel
+        LoadingPanel\Remove! if LoadingPanel
+
+        token = net.ReadString!
+        lifetime = net.ReadUInt 8
+        maxAttempts = net.ReadUInt 3
+        attemptCount = net.ReadUInt 3
+
+        Logger\debug "#{message} request data: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}"
+
+        ExchangePanel = vgui.Create "GmodSudo_PasswordPanel"
+        ExchangePanel\Setup token, lifetime, maxAttempts, attemptCount, message, bellsAndWhistles, bellsAndWhistles
+
+newExchange "GmodSudo_SignIn"
+newExchange "GmodSudo_SignUp", false
