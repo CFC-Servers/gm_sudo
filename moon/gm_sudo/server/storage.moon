@@ -1,11 +1,11 @@
-import TableExists, Query, QueryRow from sql
+import TableExists, Query, QueryRow, SQLStr from sql
 import format from string
 
 import Logger from Sudo
 
 class UserStorage
     new: =>
-        @tableName = "gm_sudo_users"
+        @tableName = SQLStr "gm_sudo_users"
 
         hook.Add "PostGamemodeLoaded", "GmodSudo_DBInit", ->
             @initTable!
@@ -26,8 +26,8 @@ class UserStorage
         Logger\debug "Storing: #{steamId} | #{digest} | #{salt}"
 
         result = Query format [[
-            INSERT OR REPLACE INTO %s (steam_id, digest, salt) VALUES(%s, %s, %s)
-        ]], @tableName, steamId, digest, salt
+            INSERT OR REPLACE INTO %s (steam_id, digest, salt) VALUES('%s', '%s', '%s')
+        ]], @tableName, SQLStr(steamId), SQLStr(digest), SQLStr(salt)
 
         error sql.LastError! if result == false else result
 
@@ -37,7 +37,7 @@ class UserStorage
         result = Query format [[
             DELETE FROM %s
             WHERE steam_id = %s
-        ]], @tableName, steamId
+        ]], @tableName, SQLStr(steamId)
 
         error sql.LastError! if result == false else result
 
@@ -48,7 +48,7 @@ class UserStorage
             SELECT digest, salt
             FROM %s
             WHERE steam_id = %s
-        ]], @tableName, steamId
+        ]], @tableName, SQLStr(steamId)
 
         error sql.LastError! if result == false else result
 
