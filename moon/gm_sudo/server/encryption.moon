@@ -13,9 +13,9 @@ class EncryptionInterface
 
     digest: (password, salt=true) =>
         Logger\debug "Generating digest"
-        salt = salt and @salt! or ""
+        generatedSalt = salt and @salt! or ""
 
-        sha.sha3_512 "#{password}#{salt}"
+        sha.sha3_512 "#{password}#{generatedSalt}"
 
     verify: (password, digest, salt="") =>
         Logger\debug "Verifying digest: #{digest}"
