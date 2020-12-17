@@ -27,7 +27,7 @@ AttemptDisplay =
 
         Text
             text: "Attempts: "
-            font: "CFC_SudoStandardFont"
+            font: "GmodSudo_SudoStandardFont"
             pos: {textXPos, 0}
             xalign: TEXT_ALIGN_RIGHT
             yalign: TEXT_ALIGN_TOP
