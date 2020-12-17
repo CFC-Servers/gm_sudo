@@ -17,11 +17,12 @@ class SignInManager extends ExchangeManager
     _timerName: (target) =>
         "GmodSudo_SignInTimeout_#{target}"
 
-    _verifyPassword: (password, target) =>
+    _verifyPassword: (target, password) =>
         Logger\debug "Verifying password in SignInManager for #{target}"
 
-        --target = target\SteamID64!
+        target = target\SteamID64!
         data = UserStorage\get target
+        print(sql.LastError())
 
         Encryption\verify(
             password,
