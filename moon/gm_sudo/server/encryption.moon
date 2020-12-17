@@ -11,7 +11,7 @@ class EncryptionInterface
 
     digest: (password) =>
         Logger\debug "Generating digest"
-        generatedSalt = Base64Encode random.Bytes!, 32
+        generatedSalt = Base64Encode random.Bytes 32
 
         sha.sha3_512("#{password}#{generatedSalt}"), generatedSalt
 
