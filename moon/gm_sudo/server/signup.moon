@@ -1,8 +1,8 @@
 import Logger from Sudo
 
-ExchangeManager = require "lib/exchange_manager"
-Encryption = require "encryption"
-UserStorage = require "storage"
+ExchangeManager = include "lib/exchange_manager.lua"
+Encryption = include "encryption.lua"
+UserStorage = include "storage.lua"
 
 networkMessage = "GmodSudo_SignUp"
 util.AddNetworkString networkMessage

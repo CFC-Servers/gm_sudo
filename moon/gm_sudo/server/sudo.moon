@@ -26,8 +26,8 @@ class SudoManager
             return @originalSuperadmin @ply
 
 Sudo =
-    SignUpManager: require "signup"
-    SignInManager: require "signin"
+    SignUpManager: include "signup.lua"
+    SignInManager: include "signin.lua"
 
 Sudo.SignInManager.onSuccess = (target) =>
     Logger\debug "SignInManager success, creating new SudoManager instance"
