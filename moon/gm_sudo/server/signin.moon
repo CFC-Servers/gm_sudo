@@ -18,9 +18,9 @@ class SignInManager extends ExchangeManager
         "GmodSudo_SignInTimeout_#{target}"
 
     _verifyPassword: (password, target) =>
-        Logger\debug "Verifying password in SignInManager"
+        Logger\debug "Verifying password in SignInManager for #{target}"
 
-        target = target\SteamID64!
+        --target = target\SteamID64!
         data = UserStorage\get target
 
         Encryption\verify(
@@ -30,7 +30,7 @@ class SignInManager extends ExchangeManager
         )
 
     receiveResponse: (target) =>
-        Logger\debug "Received response in SignInManager"
+        Logger\debug "Received response in SignInManager for #{target}"
         super target
 
         if not @_verifyPassword target, net.ReadString!
