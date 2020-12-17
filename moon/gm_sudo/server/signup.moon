@@ -20,7 +20,7 @@ class SignUpManager extends ExchangeManager
     receiveResponse: (target) =>
         Logger\debug "Received response in SignUpManager"
 
-        super!
+        super target
         digest, salt = Encryption\digest net.ReadString!
 
         -- TODO: some verification here

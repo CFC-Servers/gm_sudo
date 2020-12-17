@@ -31,7 +31,7 @@ class SignInManager extends ExchangeManager
 
     receiveResponse: (target) =>
         Logger\debug "Received response in SignInManager"
-        super!
+        super target
 
         if not @_verifyPassword target, net.ReadString!
             -- TODO: Some alert here
