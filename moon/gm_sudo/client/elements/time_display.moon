@@ -51,7 +51,7 @@ TimeDisplay =
 
         Text
             text: tostring ceil timeLeft
-            font: "CFC_SudoStandardFont"
+            font: "GmodSudo_SudoStandardFont"
             pos: {w / 2, h / 2}
             xalign: TEXT_ALIGN_CENTER
             yalign: TEXT_ALIGN_CENTER
