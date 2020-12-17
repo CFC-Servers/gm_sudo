@@ -90,7 +90,7 @@ class ExchangeManager
         return unless IsValid target
         targetSteamId = target\SteamID64!
 
-        existing = @session[targetSteamId]
+        existing = @sessions[targetSteamId]
         attempts = existing and existing.attempts or -1
         attempts += 1
 
