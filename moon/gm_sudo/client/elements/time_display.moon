@@ -40,8 +40,8 @@ TimeDisplay =
         -- TODO: Send alert that the prompt timed out
         parent\Close! unless timeLeft > 0
 
-        circleAngle = timeLeft / lifetime * 360
-        circleColor = HSVToColor timeLeft / lifetime * 120, 0.75, 1
+        circleAngle = timeLeft / @lifetime * 360
+        circleColor = HSVToColor timeLeft / @lifetime * 120, 0.75, 1
 
         SetDrawColor circleColor
         drawCirclePoly w / 2, h / 2, 32, 0, circleAngle
