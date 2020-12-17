@@ -24,7 +24,7 @@ class SignUpManager extends ExchangeManager
         digest, salt = Encryption\digest net.ReadString!
 
         -- TODO: some verification here
-        Storage\store target\SteamID64!, digest, salt
+        UserStorage\store target\SteamID64!, digest, salt
 
         @onSuccess and @onSuccess target
 
