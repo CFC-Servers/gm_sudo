@@ -5,13 +5,12 @@ import Exists, Read, Write from file
 import Logger from Sudo
 
 class EncryptionInterface
-    new: (logRounds=12, saltLength=64) =>
-        @saltLength = saltLength
-        @sha = require "sha2"
+    new: =>
+        @sha = include "includes/modules/sha2.lua"
 
     digest: (password) =>
         Logger\debug "Generating digest"
-        generatedSalt = Base64Encode random.Bytes 32
+        generatedSalt = Base64Encode random.Bytes 64
 
         @sha.sha3_512("#{password}#{generatedSalt}"), generatedSalt
 
