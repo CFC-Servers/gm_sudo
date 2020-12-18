@@ -9,10 +9,10 @@ PasswordInput =
     Init: =>
         @Dock TOP
         @DockMargin 0, 16, 0, 0
+        @DockPadding 5, 2, 5, 2
         @SetSize 480, 32
         @SetMultiline true
         @SetEnterAllowed false
-        @RequestFocus!
         @lastAttempt = RealTime!
 
     Paint: (w, h) =>
