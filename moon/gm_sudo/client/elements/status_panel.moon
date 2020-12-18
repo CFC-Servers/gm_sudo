@@ -45,7 +45,7 @@ StatusPanel =
     SetSuccess: =>
         @Clear!
 
-        animationTime = 3.5
+        animationTime = 3
 
         @success = with vgui.Create "DImage", self
             \SetImage "gm_sudo/success.png"
