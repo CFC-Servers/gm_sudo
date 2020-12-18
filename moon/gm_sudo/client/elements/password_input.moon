@@ -14,7 +14,8 @@ PasswordInput =
         @SetMultiline true
         @SetEnterAllowed false
         @lastAttempt = RealTime!
-        @MakePopup!
+        
+        timer.Simple 0.1, -> @MakePopup!
 
     Paint: (w, h) =>
         timeDiff = min RealTime! - @lastAttempt, 2
