@@ -15,7 +15,7 @@ class SignUpManager extends ExchangeManager
         @_createListener!
 
     _timerName: (target) =>
-        "GmodSudo_SignUpTimeout_#{target}"
+        "GmodSudo_SignUpTimeout_#{target\SteamID64!}"
 
     receiveResponse: (target) =>
         Logger\debug "Received response in SignUpManager"

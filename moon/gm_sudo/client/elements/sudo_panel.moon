@@ -34,6 +34,7 @@ SudoPasswordPanel =
             \SetFont "GmodSudo_SudoStandardFont"
 
         @input = vgui.Create "GmodSudo_PasswordInput", self
+        timer.Simple 0.1, -> @input\RequestFocus!
 
         if @showLifetime
             with @timeDisplay = vgui.Create "GmodSudo_TimeDisplay", self
