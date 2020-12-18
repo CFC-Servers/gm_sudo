@@ -86,7 +86,7 @@ class ExchangeManager
         if givenToken ~= expected
             error "Invalid token given! Expected '#{expected}'. Received: '#{givenToken}'"
 
-    start: (initiator, target) =>
+    start: (target) =>
         Logger\debug "Starting exchange session for: #{target}"
 
         return unless IsValid target
@@ -101,7 +101,6 @@ class ExchangeManager
         sent = os.time!
 
         @sessions[targetSteamId] =
-            :initiator
             :attempts
             :token
             :lifetime

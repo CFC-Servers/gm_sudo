@@ -39,8 +39,9 @@ class SignInManager extends ExchangeManager
 
         isValid = passesValidations and validPassword
 
-        @remove target
-        return @onSuccess and @onSuccess target if isValid
+        if isValid
+            @remove target
+            return @onSuccess target
 
         @onFailedAttempt target
         @start target
