@@ -56,9 +56,9 @@ StatusPanel =
             \SetSize 150, 136
             \Center!
             \SetAlpha 0
-            \AlphaTo 255, animationTime * 0.5, 0, -> PlaySound "gm_sudo/access_granted.mp3"
+            \AlphaTo 255, animationTime * 0.66, 0, -> PlaySound "gm_sudo/access_granted.mp3"
 
         timer.Create "GmodSudo_SuccessDestroyTimer", animationTime, 1, ->
-            @AlphaTo 0, 1, 0, -> @Remove!
+            @AlphaTo 0, 0.5, 0, -> @Remove!
 
 vgui.Register "GmodSudo_StatusPanel", StatusPanel, "DFrame"
