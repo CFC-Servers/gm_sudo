@@ -32,15 +32,16 @@ class SignInManager extends ExchangeManager
     receiveResponse: (target) =>
         Logger\debug "Received response in SignInManager for #{target}"
 
-        passesValidations = super(target) ~= false
+        passesValidations = super(target) == true
         validPassword = @_verifyPassword target, net.ReadString!
+
+        Logger\debug passesValidations, validPassword
 
         isValid = preValidation and validPassword
 
         return @onSuccess and @onSuccess target if isValid
 
-        @onFailedAttempt and @onFailedAttempt target
-
-        return @start target
+        @onFailedAttempt target if @onFailedAttempt
+        @start target
 
 SignInManager!
