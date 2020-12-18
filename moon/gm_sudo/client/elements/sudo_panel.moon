@@ -2,7 +2,7 @@ import RoundedBox from draw
 
 import Logger from Sudo
 
-include "loading_panel.lua"
+include "status_panel.lua"
 include "attempt_display.lua"
 include "password_input.lua"
 include "time_display.lua"
@@ -11,7 +11,7 @@ Colors =
     cfcPrimary: Color 36, 41, 67, 255
 
 local ExchangePanel
-local LoadingPanel
+local StatusPanel
 
 SudoPasswordPanel =
     Init: => -- no-op
@@ -64,7 +64,8 @@ SudoPasswordPanel =
             net.SendToServer!
 
             self\Remove!
-            LoadingPanel = vgui.Create "GmodSudo_LoadingPanel"
+            StatusPanel = vgui.Create "GmodSudo_StatusPanel"
+            StatusPanel\SetLoading!
 
             return
 
@@ -77,7 +78,7 @@ newExchange = (message, bellsAndWhistles=true) ->
         Logger\debug "Received '#{message}' request, clearing panels and reading data"
 
         ExchangePanel\Remove! if ExchangePanel
-        LoadingPanel\Remove! if LoadingPanel
+        StatusPanel\Remove! if StatusPanel
 
         token = net.ReadString!
         lifetime = net.ReadUInt 8
@@ -91,3 +92,14 @@ newExchange = (message, bellsAndWhistles=true) ->
 
 newExchange "GmodSudo_SignIn"
 newExchange "GmodSudo_SignUp", false
+
+net.Receive "GmodSudo_SignInSuccess", ->
+    ExchangePanel\Remove! if ExchangePanel
+    StatusPanel\Remove! if StatusPanel
+
+    StatusPanel = vgui.Create "GmodSudo_StatusPanel"
+    StatusPanel\SetSuccess!
+
+net.Receive "GmodSudo_SignUpSuccess", ->
+    StatusPanel\Remove! if StatusPanel
+    ExchangePanel\Remove! if ExchangePanel
