@@ -21,6 +21,6 @@ class SudoManager
 
     add: (ply) =>
         @_wrapSuperadmin! unless @wrapped
-        @sessions[ply] = os.time! + @duration
+        @sessions[ply\SteamID64!] = os.time! + @duration
 
 SudoManager!
