@@ -37,7 +37,7 @@ class SignInManager extends ExchangeManager
 
         Logger\debug passesValidations, validPassword
 
-        isValid = preValidation and validPassword
+        isValid = passesValidations and validPassword
 
         return @onSuccess and @onSuccess target if isValid
 
