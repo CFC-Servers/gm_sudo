@@ -61,7 +61,8 @@ class ExchangeManager
 
         sessionExpiration = session.sent + session.lifetime
         if os.time! > sessionExpiration
-            -- TODO: Some alert here
+            Logger\debug "Session expired for #{target}"
+            @sessions[target] = nil
             return false
 
     _verifyAttempts: (target) =>
@@ -75,13 +76,13 @@ class ExchangeManager
             error "Ran out of attempts! Person: #{target}"
 
     -- If the token is wrong, something is sus
-    _verifyToken: (target, givenToken) =>
+    _verifyToken: (target) =>
         Logger\debug "Verifying token for: #{target}, '#{givenToken}'"
 
         target = target\SteamID64!
         expected = @sessions[target].token
 
-        if givenToken ~= expected
+        if net.ReadString! ~= expected
             error "Invalid token given! Expected '#{expected}'. Received: '#{givenToken}'"
 
     start: (initiator, target) =>
@@ -126,8 +127,9 @@ class ExchangeManager
 
         return false unless @_verifyLifetime(target) == nil
 
-        givenToken = net.ReadString!
-        @_verifyToken target, givenToken
+        @_verifyToken target
+
+        true
 
     onSuccess: =>
         error "NotImplemented"
