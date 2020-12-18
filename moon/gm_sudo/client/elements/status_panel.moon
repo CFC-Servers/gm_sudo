@@ -1,15 +1,11 @@
 import RoundedBox from draw
 import PlaySound from surface
 
-import Logger from Sudo
-
 Colors =
     cfcPrimary: Color 36, 41, 67, 255
 
 StatusPanel =
     Init: =>
-        Logger\debug "Running Init for StatusPanel"
-
         w, h = 512, 192
 
         xPos = ScrW! - w - 32
