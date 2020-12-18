@@ -18,7 +18,7 @@ Sudo =
 Sudo.SignInManager.onSuccess = (target) =>
     Logger\debug "SignInManager success, creating new SudoManager instance"
 
-    Manager\add target
+    Sudo.Manager\add target
 
     net.Start NetMessages.signInSuccess
     net.Send target
