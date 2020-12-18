@@ -41,7 +41,7 @@ class SignInManager extends ExchangeManager
 
         return @onSuccess and @onSuccess target if isValid
 
-        @onFailedAttempt target if @onFailedAttempt
+        @onFailedAttempt target
         @start target
 
 SignInManager!
