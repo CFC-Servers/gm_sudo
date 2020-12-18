@@ -8,12 +8,13 @@ class SudoManager
         originalIsSuper = playerMeta.IsSuperAdmin
 
         playerMeta.IsSuperAdmin = (ply) ->
-            unless expiration = @sessions[ply]
-                return originalIsSuper ply
+            steamId = ply\SteamID64!
+            expiration = @sessions[steamId]
 
+            return originalIsSuper ply unless expiration
             return true unless os.time! >= expiration
 
-            @sessions[ply] = nil
+            @sessions[steamId] = nil
             originalIsSuper ply
 
         @wrapped = true
