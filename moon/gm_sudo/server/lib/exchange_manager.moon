@@ -111,7 +111,8 @@ class ExchangeManager
     remove: (target) =>
         Logger\debug "Removing exchange session for: #{target}"
 
-        @sessions[target] = nil
+        @_stopRemovalTimer target
+        @sessions[target\SteamID64!] = nil
 
     -- Acts as a verification layer
     -- Children should extend this method with business logic

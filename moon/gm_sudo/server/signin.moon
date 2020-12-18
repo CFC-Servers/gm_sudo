@@ -15,7 +15,7 @@ class SignInManager extends ExchangeManager
         @_createListener!
 
     _timerName: (target) =>
-        "GmodSudo_SignInTimeout_#{target}"
+        "GmodSudo_SignInTimeout_#{target\SteamID64!}"
 
     _verifyPassword: (target, password) =>
         Logger\debug "Verifying password in SignInManager for #{target}"
