@@ -26,6 +26,7 @@ class SignUpManager extends ExchangeManager
         -- TODO: some verification here
         UserStorage\store target\SteamID64!, digest, salt
 
+        @remove target
         @onSuccess and @onSuccess target
 
 SignUpManager!
