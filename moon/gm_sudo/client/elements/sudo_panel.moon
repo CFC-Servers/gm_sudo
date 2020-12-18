@@ -1,7 +1,5 @@
 import RoundedBox from draw
 
-import Logger from Sudo
-
 include "status_panel.lua"
 include "attempt_display.lua"
 include "password_input.lua"
@@ -17,8 +15,6 @@ SudoPasswordPanel =
     Init: => -- no-op
 
     Setup: (@token, @lifetime, @maxAttempts, @attemptCount, @responseMessage, @showLifetime=true, @showAttempts=true) =>
-        Logger\debug "Running Setup in SudoPasswordPanel: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}, #{responseMessage}, #{showLifetime}, #{showAttempts}"
-
         w, h = 512, 192
 
         xPos = ScrW! - w - 32
@@ -51,8 +47,6 @@ SudoPasswordPanel =
         RoundedBox 8, 0, 0, w, h, Colors.cfcPrimary
 
     OnSubmit: (password) =>
-        Logger\debug "Running OnSubmit in SudoPasswordPanel"
-
         isValid = password ~= ""
 
         -- TODO: Clientside validation
@@ -75,8 +69,6 @@ vgui.Register "GmodSudo_PasswordPanel", SudoPasswordPanel, "DFrame"
 
 newExchange = (message, bellsAndWhistles=true) ->
     net.Receive message, ->
-        Logger\debug "Received '#{message}' request, clearing panels and reading data"
-
         ExchangePanel\Remove! if ExchangePanel
         StatusPanel\Remove! if StatusPanel
 
@@ -84,8 +76,6 @@ newExchange = (message, bellsAndWhistles=true) ->
         lifetime = net.ReadUInt 8
         maxAttempts = net.ReadUInt 3
         attemptCount = net.ReadUInt 3
-
-        Logger\debug "#{message} request data: #{token}, #{lifetime}, #{maxAttempts}, #{attemptCount}"
 
         ExchangePanel = vgui.Create "GmodSudo_PasswordPanel"
         ExchangePanel\Setup token, lifetime, maxAttempts, attemptCount, message, bellsAndWhistles, bellsAndWhistles

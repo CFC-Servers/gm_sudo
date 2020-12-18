@@ -3,8 +3,6 @@ import ceil, cos, pi, sin from math
 import DrawPoly, SetDrawColor from surface
 import insert from table
 
-import Logger from Sudo
-
 drawCirclePoly = (x, y, r, startAng, endAng) ->
     poly = {{:x, :y}}
 
@@ -24,8 +22,6 @@ TimeDisplay =
     Init: => -- no-op
 
     Setup: (lifetime) =>
-        Logger\debug "Running Setup for TimeDisplay: #{lifetime}"
-
         @lifetime = lifetime
         @startTime = RealTime!
 
