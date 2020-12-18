@@ -43,7 +43,7 @@ StatusPanel =
 
         @success = with vgui.Create "DImage", self
             \SetImage "gm_sudo/hourglass.png"
-            \SetSize 150, 150
+            \SetSize 100, 100
             \Center!
 
     SetSuccess: =>
