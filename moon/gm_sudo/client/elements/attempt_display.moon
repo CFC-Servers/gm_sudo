@@ -19,7 +19,7 @@ AttemptDisplay =
         @widthModifier = 28
 
     Paint: (w, h) =>
-        textXPos = w - @attemptCount * @widthModifier - 4
+        textXPos = w - @maxAttempts * @widthModifier - 4
 
         Text
             text: "Attempts: "
