@@ -62,7 +62,6 @@ class ExchangeManager
         sessionExpiration = session.sent + session.lifetime
         if os.time! > sessionExpiration
             -- TODO: Some alert here
-            @start target
             return false
 
     _verifyAttempts: (target) =>
@@ -72,6 +71,7 @@ class ExchangeManager
         session = @sessions[target]
 
         if session.attempts >= @maxAttempts
+            @sessions[target] = nil
             error "Ran out of attempts! Person: #{target}"
 
     -- If the token is wrong, something is sus
@@ -117,13 +117,25 @@ class ExchangeManager
     receiveResponse: (target) =>
         Logger\debug "Received exchange response for: #{target}"
 
+        -- Verifying Sessions and Attempts protects against malicious action
+        -- Shouldn't require any polish or interface with the user
+        -- These are designed to raise an error if something goes wrong
         @_verifySession target
         @_stopRemovalTimer target
         @_verifyAttempts target
 
-        return unless @_verifyLifetime(target) == nil
+        return false unless @_verifyLifetime(target) == nil
 
         givenToken = net.ReadString!
         @_verifyToken target, givenToken
+
+    onSuccess: =>
+        error "NotImplemented"
+
+    onFailedAttempt: =>
+        error "NotImplemented"
+
+    onFailure: =>
+        error "NotImplemented"
 
 ExchangeManager

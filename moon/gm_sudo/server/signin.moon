@@ -22,7 +22,6 @@ class SignInManager extends ExchangeManager
 
         target = target\SteamID64!
         data = UserStorage\get target
-        print(sql.LastError())
 
         Encryption\verify(
             password,
@@ -32,12 +31,16 @@ class SignInManager extends ExchangeManager
 
     receiveResponse: (target) =>
         Logger\debug "Received response in SignInManager for #{target}"
-        super target
 
-        if not @_verifyPassword target, net.ReadString!
-            -- TODO: Some alert here
-            return @start target
+        passesValidations = super(target) ~= false
+        validPassword = @_verifyPassword target, net.ReadString!
 
-        @onSuccess and @onSuccess target
+        isValid = preValidation and validPassword
+
+        return @onSuccess and @onSuccess target if isValid
+
+        @onFailedAttempt and @onFailedAttempt target
+
+        return @start target
 
 SignInManager!

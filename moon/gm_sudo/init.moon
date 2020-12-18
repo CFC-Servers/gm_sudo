@@ -24,10 +24,14 @@ if SERVER
     AddCSLuaFile "client/init.lua"
     AddCSLuaFile "client/prompt.lua"
     AddCSLuaFile "client/elements/sudo_panel.lua"
-    AddCSLuaFile "client/elements/loading_panel.lua"
+    AddCSLuaFile "client/elements/status_panel.lua"
     AddCSLuaFile "client/elements/attempt_display.lua"
     AddCSLuaFile "client/elements/password_input.lua"
     AddCSLuaFile "client/elements/time_display.lua"
+
+    resource.AddSingleFile "materials/gm_sudo/success.png"
+    resource.AddSingleFile "materials/gm_sudo/loading.gif"
+    resource.AddSingleFile "sound/gm_sudo/access_granted.mp3"
 
 if CLIENT
     include "client/init.lua"
