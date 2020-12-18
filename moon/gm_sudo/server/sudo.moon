@@ -33,7 +33,7 @@ Sudo.SignUpManager.onFailedAttempt = (target) => Logger\debug "SignUpManager fai
 net.Receive NetMessages.signInRequest, (_, ply) ->
     Logger\debug "Received sign in request, creating new SignInManager instance"
 
-    Sudo.SignInManager\start ply, ply
+    Sudo.SignInManager\start ply
 
 concommand.Add "sudoadd", (ply, cmd, args) ->
     return if IsValid ply
@@ -41,4 +41,4 @@ concommand.Add "sudoadd", (ply, cmd, args) ->
     steamId = args[1]
     target = GetBySteamID steamId
 
-    Sudo.SignUpManager\start "Console", target
+    Sudo.SignUpManager\start target
