@@ -1,6 +1,6 @@
 import NoTexture, Text from draw
 import ceil, cos, pi, sin from math
-import SetDrawColor from surface
+import DrawPoly, SetDrawColor from surface
 import insert from table
 
 import Logger from Sudo
@@ -13,6 +13,8 @@ drawCirclePoly = (x, y, r, startAng, endAng) ->
         dy = y + sin( ang / 180 * pi ) * r
 
         insert poly, {x: dx, y: dy}
+
+    DrawPoly poly
 
 Colors =
     circleColor: Color 36, 41, 67, 255
