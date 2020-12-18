@@ -49,17 +49,16 @@ StatusPanel =
     SetSuccess: =>
         @Clear!
 
-        animationTime = 3
+        animationTime = 3.5
 
         @success = with vgui.Create "DImage", self
             \SetImage "gm_sudo/success.png"
             \SetSize 150, 136
             \Center!
             \SetAlpha 0
-            \AlphaTo 255, animationTime * 0.66, 0, -> PlaySound "gm_sudo/access_granted.mp3"
+            \AlphaTo 255, animationTime * 0.5, 0, -> PlaySound "gm_sudo/access_granted.mp3"
 
         timer.Create "GmodSudo_SuccessDestroyTimer", animationTime, 1, ->
-            @Clear!
-            self\Remove!
+            @AlphaTo 0, 1, 0, -> @Remove!
 
 vgui.Register "GmodSudo_StatusPanel", StatusPanel, "DFrame"
