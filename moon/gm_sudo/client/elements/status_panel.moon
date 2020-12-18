@@ -42,8 +42,8 @@ StatusPanel =
             \SetFont "GmodSudo_SudoStandardFont"
 
         @success = with vgui.Create "DImage", self
-            \SetImage "gm_sudo/loading.gif"
-            \SetSize 100, 100
+            \SetImage "gm_sudo/hourglass.png"
+            \SetSize 150, 150
             \Center!
 
     SetSuccess: =>
