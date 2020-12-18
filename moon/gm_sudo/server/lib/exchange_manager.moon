@@ -62,7 +62,7 @@ class ExchangeManager
         sessionExpiration = session.sent + session.lifetime
         if os.time! > sessionExpiration
             Logger\debug "Session expired for #{target}"
-            @sessions[target] = nil
+            @remove target
             return false
 
     _verifyAttempts: (target) =>
@@ -72,7 +72,7 @@ class ExchangeManager
         session = @sessions[target]
 
         if session.attempts >= @maxAttempts
-            @sessions[target] = nil
+            @remove target
             error "Ran out of attempts! Person: #{target}"
 
     -- If the token is wrong, something is sus
