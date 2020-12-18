@@ -14,6 +14,7 @@ PasswordInput =
         @SetMultiline true
         @SetEnterAllowed false
         @lastAttempt = RealTime!
+        @MakePopup!
 
     Paint: (w, h) =>
         timeDiff = min RealTime! - @lastAttempt, 2
@@ -25,7 +26,7 @@ PasswordInput =
         textLength = len @GetValue!
 
         Text
-            text: rep "*", textLength
+            text: rep "·", textLength
             font: "GmodSudo_SudoPasswordFont"
             pos: {0, 0}
             color: Colors.white
