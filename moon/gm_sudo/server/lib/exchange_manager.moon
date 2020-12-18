@@ -77,12 +77,13 @@ class ExchangeManager
 
     -- If the token is wrong, something is sus
     _verifyToken: (target) =>
+        givenToken = net.ReadString!
         Logger\debug "Verifying token for: #{target}, '#{givenToken}'"
 
         target = target\SteamID64!
         expected = @sessions[target].token
 
-        if net.ReadString! ~= expected
+        if givenToken ~= expected
             error "Invalid token given! Expected '#{expected}'. Received: '#{givenToken}'"
 
     start: (initiator, target) =>

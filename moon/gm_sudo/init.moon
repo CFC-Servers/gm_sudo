@@ -30,7 +30,7 @@ if SERVER
     AddCSLuaFile "client/elements/time_display.lua"
 
     resource.AddSingleFile "materials/gm_sudo/success.png"
-    resource.AddSingleFile "materials/gm_sudo/loading.gif"
+    resource.AddSingleFile "materials/gm_sudo/hourglass.png"
     resource.AddSingleFile "sound/gm_sudo/access_granted.mp3"
 
 if CLIENT
