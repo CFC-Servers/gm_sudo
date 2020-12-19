@@ -56,12 +56,12 @@ class ExchangeManager
     _verifyLifetime: (target) =>
         Logger\debug "Verifying lifetime for: #{target}"
 
-        target = target\SteamID64!
-        session = @sessions[target]
+        targetSteamId = target\SteamID64!
+        session = @sessions[targetSteamId]
 
         sessionExpiration = session.sent + session.lifetime
         if os.time! > sessionExpiration
-            Logger\debug "Session expired for #{target}"
+            Logger\debug "Session expired for #{targetSteamId}"
             @remove target
             return false
 
