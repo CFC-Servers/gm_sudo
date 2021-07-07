@@ -1,10 +1,7 @@
 import GetBySteamID from player
 import Logger from Sudo
 
-NetMessages =
-    signInRequest: "GmodSudo_RequestSignIn"
-    signInSuccess: "GmodSudo_SignInSuccess"
-    addSudoPlayer: "GmodSudo_AddSudoPlayer"
+NetMessages = include "gm_sudo/shared/net_messages.lua"
 
 util.AddNetworkString NetMessages.signInRequest
 util.AddNetworkString NetMessages.signInSuccess
@@ -13,7 +10,7 @@ util.AddNetworkString NetMessages.addSudoPlayer
 Sudo =
     SignUpManager: include "signup.lua"
     SignInManager: include "signin.lua"
-    Manager: include "gm_sudo/sudo_manager.lua"
+    Manager: include "gm_sudo/shared/sudo_manager.lua"
 
 -- SignInManager --
 Sudo.SignInManager.onSuccess = (target) =>

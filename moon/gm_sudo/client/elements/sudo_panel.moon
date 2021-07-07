@@ -8,6 +8,8 @@ include "time_display.lua"
 Colors =
     cfcPrimary: Color 36, 41, 67, 255
 
+NetMessages = include "gm_sudo/shared/net_messages.lua"
+
 local ExchangePanel
 local StatusPanel
 
@@ -81,16 +83,20 @@ newExchange = (message, bellsAndWhistles=true) ->
         ExchangePanel = vgui.Create "GmodSudo_PasswordPanel"
         ExchangePanel\Setup token, lifetime, maxAttempts, attemptCount, message, bellsAndWhistles, bellsAndWhistles
 
-newExchange "GmodSudo_SignIn"
-newExchange "GmodSudo_SignUp", false
+newExchange NetMessages.signInRequest
+newExchange NetMessages.signUpRequest, false
 
-net.Receive "GmodSudo_SignInSuccess", ->
+net.Receive NetMessages.signInSuccess, ->
     ExchangePanel\Remove! if ExchangePanel
     StatusPanel\Remove! if StatusPanel
 
     StatusPanel = vgui.Create "GmodSudo_StatusPanel"
     StatusPanel\SetSuccess!
 
-net.Receive "GmodSudo_SignUpSuccess", ->
+net.Receive NetMessages.signUpSuccess, ->
     StatusPanel\Remove! if StatusPanel
     ExchangePanel\Remove! if ExchangePanel
+
+    StatusPanel = vgui.Create "GmodSudo_StatusPanel"
+    StatusPanel\SetSuccess!
+
