@@ -51,19 +51,22 @@ class ExchangeManager
         -- Does a session exist
         target = target\SteamID64!
         session = @sessions[target]
-        error "No session for given target: #{target}" unless session
+
+        return true if session
+
+        ErrorNoHaltWithStack "No session for given target: #{target}"
 
     _verifyLifetime: (target) =>
         Logger\debug "Verifying lifetime for: #{target}"
 
         targetSteamID = target\SteamID64!
         session = @sessions[targetSteamID]
-
         sessionExpiration = session.sent + session.lifetime
-        if os.time! > sessionExpiration
-            Logger\debug "Session expired for #{targetSteamID}"
-            @remove target
-            return false
+
+        return true if os.time! < sessionExpiration
+
+        Logger\warn "Session expired for #{targetSteamID}"
+        @remove target
 
     _verifyAttempts: (target) =>
         Logger\debug "Verifying attempts for: #{target}"
@@ -71,11 +74,13 @@ class ExchangeManager
         targetSteamID = target\SteamID64!
         session = @sessions[targetSteamID]
 
-        if session.attempts >= @maxAttempts
-            @remove target
-            error "Ran out of attempts! Person: #{target}"
+        return true if session.attempts < @maxAttempts
+
+        @remove target
+        ErrorNoHaltWithStack "Ran out of attempts! Person: #{target}"
 
     -- If the token is wrong, something is sus
+    -- TODO: Webhook if incorrect token
     _verifyToken: (target) =>
         givenToken = net.ReadString!
         Logger\debug "Verifying token for: #{target}, '#{givenToken}'"
@@ -83,8 +88,9 @@ class ExchangeManager
         target = target\SteamID64!
         expected = @sessions[target].token
 
-        if givenToken ~= expected
-            error "Invalid token given! Expected '#{expected}'. Received: '#{givenToken}'"
+        return true if givenToken == expected
+
+        ErrorNoHaltWithStack "Invalid token given! Expected '#{expected}'. Received: '#{givenToken}'"
 
     start: (target) =>
         Logger\debug "Starting exchange session for: #{target}"
@@ -121,15 +127,11 @@ class ExchangeManager
 
         -- Verifying Sessions and Attempts protects against malicious action
         -- Shouldn't require any polish or interface with the user
-        -- These are designed to raise an error if something goes wrong
-        @_verifySession target
-        @_stopRemovalTimer target
-        @_verifyAttempts target
-
-        -- Should this err?
-        return false unless @_verifyLifetime(target) == nil
-
-        @_verifyToken target
+        return false unless @_verifySession target
+        return false unless @_stopRemovalTimer target
+        return false unless @_verifyAttempts target
+        return false unless @_verifyLifetime target
+        return false unless @_verifyToken target
 
         true
 
