@@ -56,20 +56,20 @@ class ExchangeManager
     _verifyLifetime: (target) =>
         Logger\debug "Verifying lifetime for: #{target}"
 
-        targetSteamId = target\SteamID64!
-        session = @sessions[targetSteamId]
+        targetSteamID = target\SteamID64!
+        session = @sessions[targetSteamID]
 
         sessionExpiration = session.sent + session.lifetime
         if os.time! > sessionExpiration
-            Logger\debug "Session expired for #{targetSteamId}"
+            Logger\debug "Session expired for #{targetSteamID}"
             @remove target
             return false
 
     _verifyAttempts: (target) =>
         Logger\debug "Verifying attempts for: #{target}"
 
-        target = target\SteamID64!
-        session = @sessions[target]
+        targetSteamID = target\SteamID64!
+        session = @sessions[targetSteamID]
 
         if session.attempts >= @maxAttempts
             @remove target
@@ -90,9 +90,9 @@ class ExchangeManager
         Logger\debug "Starting exchange session for: #{target}"
 
         return unless IsValid target
-        targetSteamId = target\SteamID64!
+        targetSteamID = target\SteamID64!
 
-        existing = @sessions[targetSteamId]
+        existing = @sessions[targetSteamID]
         attempts = existing and existing.attempts or -1
         attempts += 1
 
@@ -100,7 +100,7 @@ class ExchangeManager
         lifetime = @sessionLifetime
         sent = os.time!
 
-        @sessions[targetSteamId] =
+        @sessions[targetSteamID] =
             :attempts
             :token
             :lifetime
