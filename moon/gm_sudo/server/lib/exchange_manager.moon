@@ -126,6 +126,7 @@ class ExchangeManager
         @_stopRemovalTimer target
         @_verifyAttempts target
 
+        -- Should this err?
         return false unless @_verifyLifetime(target) == nil
 
         @_verifyToken target
