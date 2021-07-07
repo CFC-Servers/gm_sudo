@@ -1,7 +1,7 @@
-require "securerandom"
 import Base64Encode from util
-
 import Logger from Sudo
+
+Random = include "random.lua"
 
 class ExchangeManager
     new: =>
@@ -20,7 +20,7 @@ class ExchangeManager
     _timerName: (target) =>
         error "NotImplemented"
 
-    _generateToken: => Base64Encode random.Bytes @tokenSize
+    _generateToken: => Base64Encode Random.bytes @tokenSize
 
     _createRemovalTimer: (target) =>
         Logger\debug "Creating removal timer for: #{target}"
