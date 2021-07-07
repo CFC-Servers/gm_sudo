@@ -1,18 +1,19 @@
 import GetBySteamID from player
-
 import Logger from Sudo
 
 NetMessages =
     signInRequest: "GmodSudo_RequestSignIn"
     signInSuccess: "GmodSudo_SignInSuccess"
+    addSudoPlayer: "GmodSudo_AddSudoPlayer"
 
 util.AddNetworkString NetMessages.signInRequest
 util.AddNetworkString NetMessages.signInSuccess
+util.AddNetworkString NetMessages.addSudoPlayer
 
 Sudo =
     SignUpManager: include "signup.lua"
     SignInManager: include "signin.lua"
-    Manager: include "sudo_manager.lua"
+    Manager: include "gm_sudo/sudo_manager.lua"
 
 -- SignInManager --
 Sudo.SignInManager.onSuccess = (target) =>
@@ -22,6 +23,10 @@ Sudo.SignInManager.onSuccess = (target) =>
 
     net.Start NetMessages.signInSuccess
     net.Send target
+
+    net.Start NetMessages.addSudoPlayer
+    net.WriteEntity target
+    net.Broadcast!
 
 Sudo.SignInManager.onFailedAttempt = (target) => Logger\debug "SignInManager failed attempt"
 

@@ -4,3 +4,4 @@
     -- Respond with net message to server, include PIN, encrypted private key, and given token
 
 include "prompt.lua"
+include "sudo.lua"
