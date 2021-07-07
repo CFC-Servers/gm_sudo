@@ -78,10 +78,7 @@ class ExchangeManager
         targetSteamID = target\SteamID64!
         session = @sessions[targetSteamID]
 
-        return true if session.attempts < @maxAttempts
-
-        @remove target
-        ErrorNoHaltWithStack "Ran out of attempts! Person: #{target}"
+        return true if session.attempts <= @maxAttempts
 
         false
 
@@ -138,7 +135,11 @@ class ExchangeManager
         return false unless @_verifySession target
         @_stopRemovalTimer target
 
-        return false unless @_verifyAttempts target
+        if not @_verifyAttempts target
+            @remove target
+            @onFailure target, "Too many failed attempts!"
+            error "Too many failed attempts for #{target}!"
+
         return false unless @_verifyLifetime target
         return false unless @_verifyToken target
 

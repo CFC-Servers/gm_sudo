@@ -83,20 +83,36 @@ newExchange = (message, bellsAndWhistles=true) ->
         ExchangePanel = vgui.Create "GmodSudo_PasswordPanel"
         ExchangePanel\Setup token, lifetime, maxAttempts, attemptCount, message, bellsAndWhistles, bellsAndWhistles
 
+
+closePanels = ->
+    ExchangePanel\Remove! if ExchangePanel
+    StatusPanel\Remove! if StatusPanel
+
+-- SignIn
+
 newExchange NetMessages.signInRequest
-newExchange NetMessages.signUpRequest, false
 
 net.Receive NetMessages.signInSuccess, ->
-    ExchangePanel\Remove! if ExchangePanel
-    StatusPanel\Remove! if StatusPanel
+    closePanels!
 
     StatusPanel = vgui.Create "GmodSudo_StatusPanel"
     StatusPanel\SetSuccess!
+
+net.Receive NetMessages.signInFailure, ->
+    closePanels!
+    message = net.ReadString!
+
+    LocalPlayer!\ChatPrint message
+
+-- SignUp
+
+newExchange NetMessages.signUpRequest, false
 
 net.Receive NetMessages.signUpSuccess, ->
-    StatusPanel\Remove! if StatusPanel
-    ExchangePanel\Remove! if ExchangePanel
+    closePanels!
 
     StatusPanel = vgui.Create "GmodSudo_StatusPanel"
     StatusPanel\SetSuccess!
 
+net.Receive NetMessages.signUpFailure, ->
+    closePanels!
