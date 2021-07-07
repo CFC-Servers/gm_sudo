@@ -128,7 +128,8 @@ class ExchangeManager
         -- Verifying Sessions and Attempts protects against malicious action
         -- Shouldn't require any polish or interface with the user
         return false unless @_verifySession target
-        return false unless @_stopRemovalTimer target
+        @_stopRemovalTimer target
+
         return false unless @_verifyAttempts target
         return false unless @_verifyLifetime target
         return false unless @_verifyToken target
