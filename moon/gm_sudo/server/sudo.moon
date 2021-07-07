@@ -5,6 +5,10 @@ NetMessages = include "gm_sudo/shared/net_messages.lua"
 
 util.AddNetworkString NetMessages.signInRequest
 util.AddNetworkString NetMessages.signInSuccess
+
+util.AddNetworkString NetMessages.signUpRequest
+util.AddNetworkString NetMessages.signUpSuccess
+
 util.AddNetworkString NetMessages.addSudoPlayer
 
 Sudo =
