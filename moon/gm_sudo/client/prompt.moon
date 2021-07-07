@@ -18,7 +18,7 @@ requestSudo = ->
     Logger\debug "Requesting Sudo access!"
     return if os.time! < lastRequest + 10
 
-    net.Start NetMessages.signInRequest
+    net.Start NetMessages.signInStart
     net.SendToServer!
 
     lastRequest = os.time!

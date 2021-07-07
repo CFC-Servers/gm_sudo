@@ -30,6 +30,7 @@ class SignInManager extends ExchangeManager
     receiveResponse: (target) =>
         Logger\debug "Received response in SignInManager for #{target}"
 
+        -- should we pcall this or something?
         passesValidations = super(target) == true
         validPassword = @_verifyPassword target, net.ReadString!
 

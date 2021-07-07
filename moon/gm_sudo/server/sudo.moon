@@ -3,6 +3,7 @@ import Logger from Sudo
 
 NetMessages = include "gm_sudo/shared/net_messages.lua"
 
+util.AddNetworkString NetMessages.signInStart
 util.AddNetworkString NetMessages.signInRequest
 util.AddNetworkString NetMessages.signInSuccess
 
@@ -36,7 +37,7 @@ Sudo.SignUpManager.onSuccess = (target) => Logger\info "SignUp success!"
 Sudo.SignUpManager.onFailedAttempt = (target) => Logger\debug "SignUpManager failed attempt"
 
 -- Interface --
-net.Receive NetMessages.signInRequest, (_, ply) ->
+net.Receive NetMessages.signInStart, (_, ply) ->
     Logger\debug "Received sign in request, creating new SignInManager instance"
 
     Sudo.SignInManager\start ply
