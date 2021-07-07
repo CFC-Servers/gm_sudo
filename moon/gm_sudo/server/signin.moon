@@ -30,17 +30,19 @@ class SignInManager extends ExchangeManager
     receiveResponse: (target) =>
         Logger\debug "Received response in SignInManager for #{target}"
 
-        -- should we pcall this or something?
         passesValidations = super(target) == true
-        validPassword = @_verifyPassword target, net.ReadString!
 
-        Logger\debug passesValidations, validPassword
+        if passesValidations
+            validPassword = @_verifyPassword target, net.ReadString!
 
-        isValid = passesValidations and validPassword
+            Logger\debug "Passes validations"
 
-        if isValid
-            @remove target
-            return @onSuccess target
+            if validPassword
+                Logger\debug "Given a valid password, allowing access to #{target}"
+                @remove target
+                return @onSuccess target
+
+        Logger\debug "Validations did not pass or given password was incorrect, failed attempt"
 
         @onFailedAttempt target
         @start target

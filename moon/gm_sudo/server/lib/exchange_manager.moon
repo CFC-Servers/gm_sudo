@@ -56,6 +56,8 @@ class ExchangeManager
 
         ErrorNoHaltWithStack "No session for given target: #{target}"
 
+        false
+
     _verifyLifetime: (target) =>
         Logger\debug "Verifying lifetime for: #{target}"
 
@@ -68,6 +70,8 @@ class ExchangeManager
         Logger\warn "Session expired for #{targetSteamID}"
         @remove target
 
+        false
+
     _verifyAttempts: (target) =>
         Logger\debug "Verifying attempts for: #{target}"
 
@@ -78,6 +82,8 @@ class ExchangeManager
 
         @remove target
         ErrorNoHaltWithStack "Ran out of attempts! Person: #{target}"
+
+        false
 
     -- If the token is wrong, something is sus
     -- TODO: Webhook if incorrect token
@@ -91,6 +97,8 @@ class ExchangeManager
         return true if givenToken == expected
 
         ErrorNoHaltWithStack "Invalid token given! Expected '#{expected}'. Received: '#{givenToken}'"
+
+        false
 
     start: (target) =>
         Logger\debug "Starting exchange session for: #{target}"
