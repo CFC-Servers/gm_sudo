@@ -22,6 +22,7 @@ if SERVER
     include "server/init.lua"
 
     AddCSLuaFile "shared/sudo_manager.lua"
+    AddCSLuaFile "shared/net_messages.lua"
 
     AddCSLuaFile "client/init.lua"
     AddCSLuaFile "client/prompt.lua"
