@@ -21,7 +21,8 @@ else
 if SERVER
     include "server/init.lua"
 
-    AddCSLuaFile "sudo_manager.lua"
+    AddCSLuaFile "shared/sudo_manager.lua"
+
     AddCSLuaFile "client/init.lua"
     AddCSLuaFile "client/prompt.lua"
     AddCSLuaFile "client/elements/sudo_panel.lua"

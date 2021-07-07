@@ -1,5 +1,6 @@
-Manager = include "gm_sudo/sudo_manager.lua"
+NetMessages = include "gm_sudo/shared/net_messages.lua"
+Manager = include "gm_sudo/shared/sudo_manager.lua"
 
-net.Receive "GmodSudo_AddSudoPlayer", ->
+net.Receive NetMessages.addSudoPlayer, ->
     target = net.ReadEntity!
     Manager\add target
