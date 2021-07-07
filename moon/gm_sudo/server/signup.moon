@@ -3,15 +3,13 @@ import Logger from Sudo
 ExchangeManager = include "lib/exchange_manager.lua"
 Encryption = include "encryption.lua"
 UserStorage = include "storage.lua"
-
-networkMessage = "GmodSudo_SignUp"
-util.AddNetworkString networkMessage
+NetMessages = include "gm_sudo/shared/net_messages.lua"
 
 class SignUpManager extends ExchangeManager
     new: =>
         super!
         @sessionLifetime = 180
-        @promptMessage = networkMessage
+        @promptMessage = NetMessages.signUpRequest
         @_createListener!
 
     _timerName: (target) =>
