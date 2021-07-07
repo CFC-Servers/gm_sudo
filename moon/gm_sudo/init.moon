@@ -25,6 +25,7 @@ if SERVER
     AddCSLuaFile "shared/net_messages.lua"
 
     AddCSLuaFile "client/init.lua"
+    AddCSLuaFile "client/sudo.lua"
     AddCSLuaFile "client/prompt.lua"
     AddCSLuaFile "client/elements/sudo_panel.lua"
     AddCSLuaFile "client/elements/status_panel.lua"
