@@ -1,8 +1,8 @@
-require "securerandom"
-
 import Base64Encode from util
 import Exists, Read, Write from file
 import Logger from Sudo
+
+Random = include "random.lua"
 
 class EncryptionInterface
     new: =>
@@ -10,7 +10,7 @@ class EncryptionInterface
 
     digest: (password) =>
         Logger\debug "Generating digest"
-        generatedSalt = Base64Encode random.Bytes 64
+        generatedSalt = Base64Encode Random.bytes 64
 
         @sha.sha3_512("#{password}#{generatedSalt}"), generatedSalt
 
