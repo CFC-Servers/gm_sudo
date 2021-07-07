@@ -1,7 +1,7 @@
 import Base64Encode from util
 import Logger from Sudo
 
-Random = include "random.lua"
+Random = include "gm_sudo/server/random.lua"
 
 class ExchangeManager
     new: =>
