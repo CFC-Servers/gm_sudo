@@ -2,21 +2,18 @@ import Base64Encode from util
 import Exists, Read, Write from file
 import Logger from Sudo
 
-Random = include "random.lua"
+encryptionSetting = CreateConVar("gm_sudo_encryption_method", "sha512", FCVAR_PROTECTED)\GetString!
+encrypt = include("includes/modules/sha2.lua")[encryptionSetting]
 
 class EncryptionInterface
     new: =>
-        @sha = include "includes/modules/sha2.lua"
+        @random = include "lib/random.lua"
 
     digest: (password) =>
-        Logger\debug "Generating digest"
-        generatedSalt = Base64Encode Random.bytes 64
-
-        @sha.sha3_512("#{password}#{generatedSalt}"), generatedSalt
+        generatedSalt = Base64Encode @random.bytes 64
+        encrypt("#{password}#{generatedSalt}"), generatedSalt
 
     verify: (password, digest, salt="") =>
-        Logger\debug "Verifying digest: #{digest}"
-
-        digest == @sha.sha3_512 "#{password}#{salt}"
+        digest == encrypt "#{password}#{salt}"
 
 EncryptionInterface!

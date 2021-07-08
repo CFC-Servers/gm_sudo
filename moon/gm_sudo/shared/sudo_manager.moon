@@ -22,7 +22,8 @@ class SudoManager
         @_wrap "IsSuperAdmin"
 
         @_wrap "CheckGroup"
-        @_wrap "GetUserGroup", "superadmin"
+        @_wrap "GetUserGroup", "superadmin" if SERVER
+
         @wrapped = true
 
     add: (ply) =>
