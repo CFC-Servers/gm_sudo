@@ -7,7 +7,7 @@ encryptionSetting = CreateConVar "gm_sudo_encryption_method", "sha512", FCVAR_PR
 class EncryptionInterface
     new: =>
         @random = include "lib/random.lua"
-        @sha = include "includes/modules/sha2.lua")
+        @sha = include "includes/modules/sha2.lua"
 
     encrypt: =>
         return @_encrypt if @_encrypt
