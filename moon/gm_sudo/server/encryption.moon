@@ -7,13 +7,13 @@ encryptionSetting = CreateConVar("gm_sudo_encryption_method", "sha512", FCVAR_PR
 class EncryptionInterface
     new: =>
         @random = include "lib/random.lua"
-        @encrypt = include("includes/modules/sha2.lua")[encryptionSetting]
+        @encrypt = include("includes/modules/sha2.lua")[encryptionSetting\GetString!]
 
     digest: (password) =>
         generatedSalt = Base64Encode @random.bytes 64
-        encrypt("#{password}#{generatedSalt}"), generatedSalt
+        @encrypt("#{password}#{generatedSalt}"), generatedSalt
 
     verify: (password, digest, salt="") =>
-        digest == encrypt "#{password}#{salt}"
+        digest == @encrypt "#{password}#{salt}"
 
 EncryptionInterface!
