@@ -5,7 +5,7 @@ import Logger from Sudo
 encryptionSetting = CreateConVar "gm_sudo_encryption_method", "sha512", FCVAR_PROTECTED
 
 local encrypt
-hook.Add "OnGamemodeLoaded", "GmodSudo_LoadEncryptionMethod", ->
+hook.Add "InitPostEntity", "GmodSudo_LoadEncryptionMethod", ->
     encrypt = include("includes/modules/sha2.lua")[encryptionSetting\GetString!]
 
 class EncryptionInterface
