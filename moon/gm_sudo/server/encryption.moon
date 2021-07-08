@@ -4,6 +4,7 @@ import Logger from Sudo
 
 encryptionSetting = CreateConVar("gm_sudo_encryption_method", "sha512", FCVAR_PROTECTED)\GetString!
 encrypt = include("includes/modules/sha2.lua")[encryptionSetting]
+print("Using: #{encryptionSetting} method")
 
 class EncryptionInterface
     new: =>
