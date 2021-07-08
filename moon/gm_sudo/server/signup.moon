@@ -25,6 +25,8 @@ class SignUpManager extends ExchangeManager
         UserStorage\store target\SteamID64!, digest, salt
 
         @remove target
+
+        hook.Run "GmodSudo_PostPlayerSignUp"
         @onSuccess and @onSuccess target
 
 SignUpManager!

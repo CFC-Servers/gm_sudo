@@ -3,16 +3,8 @@ import Logger from Sudo
 
 NetMessages = include "gm_sudo/shared/net_messages.lua"
 
-util.AddNetworkString NetMessages.signInStart
-util.AddNetworkString NetMessages.signInRequest
-util.AddNetworkString NetMessages.signInSuccess
-util.AddNetworkString NetMessages.signInFailure
-
-util.AddNetworkString NetMessages.signUpRequest
-util.AddNetworkString NetMessages.signUpSuccess
-util.AddNetworkString NetMessages.signUpFailure
-
-util.AddNetworkString NetMessages.addSudoPlayer
+for _, message in pairs NetMessages
+    util.AddNetworkString message
 
 Sudo =
     SignUpManager: include "signup.lua"
@@ -20,10 +12,13 @@ Sudo =
     Manager: include "gm_sudo/shared/sudo_manager.lua"
 
 -- SignInManager --
-Sudo.SignInManager.onFailedAttempt = (target) => Logger\debug "SignInManager failed attempt"
+Sudo.SignInManager.onFailedAttempt = (target) =>
+    Logger\debug "SignInManager failed attempt"
+    hook.Run "GmodSudo_FailedSignInAttempt", target
 
 Sudo.SignInManager.onSuccess = (target) =>
     Logger\debug "SignInManager success, creating new SudoManager instance"
+    hook.Run "GmodSudo_SuccessfulSignIn", target
 
     Sudo.Manager\add target
 
@@ -34,8 +29,11 @@ Sudo.SignInManager.onSuccess = (target) =>
     net.WriteEntity target
     net.Broadcast!
 
+    hook.Run "GmodSudo_PostPlayerSignin", target
+
 Sudo.SignInManager.onFailure = (target, message) =>
     Logger\info "SignIn failure for #{target}"
+    hook.Run "GmodSudo_FailedSignIn", target, message
 
     net.Start NetMessages.signInFailure
     net.WriteString message
@@ -59,6 +57,9 @@ Sudo.SignUpManager.onFailure = (target, message) =>
 
 -- Interface --
 net.Receive NetMessages.signInStart, (_, ply) ->
+    result = hook.Run "GmodSudo_PlayerSignInRequest", ply
+    return if result == false
+
     Logger\debug "Received sign in request, creating new SignInManager instance"
 
     Sudo.SignInManager\start ply

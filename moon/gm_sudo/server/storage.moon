@@ -1,6 +1,5 @@
 import TableExists, Query, QueryRow, SQLStr from sql
 import format from string
-
 import Logger from Sudo
 
 class UserStorage

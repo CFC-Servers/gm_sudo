@@ -1,7 +1,7 @@
 import Base64Encode from util
 import Logger from Sudo
 
-Random = include "gm_sudo/server/random.lua"
+Random = include "random.lua"
 
 class ExchangeManager
     new: =>
@@ -10,6 +10,10 @@ class ExchangeManager
         @tokenSize = 32
         @sessionLifetime = 120
         @promptMessage = nil
+
+        @throttle = {}
+        @throttleAmount = 2
+        @throttleTime = 1
 
     _createListener: =>
         Logger\debug "Creating net listener for: #{@promptMessage}"
@@ -21,6 +25,10 @@ class ExchangeManager
         error "NotImplemented"
 
     _generateToken: => Base64Encode Random.bytes @tokenSize
+
+    _createThrottleTimer: =>
+        timer.Create "#{@promptMessage}_throttle", @throttleTime, 0, ->
+            @throttle = {}
 
     _createRemovalTimer: (target) =>
         Logger\debug "Creating removal timer for: #{target}"
@@ -101,6 +109,10 @@ class ExchangeManager
         return unless IsValid target
         targetSteamID = target\SteamID64!
 
+        if (@throttle[targetSteamID] or 0) > @throttleAmount
+            return Logger\warn "Player exceeded rate limit, ignoring: #{target}"
+
+        @throttle[targetSteamID] += 1
         existing = @sessions[targetSteamID]
         attempts = existing and existing.attempts or -1
         attempts += 1

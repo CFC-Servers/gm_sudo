@@ -10,7 +10,9 @@ class SignInManager extends ExchangeManager
         super!
         @sessionLifetime = 60
         @promptMessage = NetMessages.signInRequest
+
         @_createListener!
+        @_createThrottleTimer!
 
     _timerName: (target) =>
         "GmodSudo_SignInTimeout_#{target\SteamID64!}"
@@ -40,6 +42,7 @@ class SignInManager extends ExchangeManager
             if validPassword
                 Logger\debug "Given a valid password, allowing access to #{target}"
                 @remove target
+
                 return @onSuccess target
 
         Logger\debug "Validations did not pass or given password was incorrect, failed attempt"
