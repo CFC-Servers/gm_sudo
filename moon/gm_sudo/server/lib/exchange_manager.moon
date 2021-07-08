@@ -109,7 +109,9 @@ class ExchangeManager
         return unless IsValid target
         targetSteamID = target\SteamID64!
 
-        if (@throttle[targetSteamID] or 0) > @throttleAmount
+        @throttle[targetSteamID] or= 0
+
+        if (@throttle[targetSteamID]) > @throttleAmount
             return Logger\warn "Player exceeded rate limit, ignoring: #{target}"
 
         @throttle[targetSteamID] += 1
