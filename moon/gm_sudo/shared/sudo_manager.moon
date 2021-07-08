@@ -3,24 +3,30 @@ class SudoManager
         @sessions = {}
         @wrapped = false
 
-    _wrapSuperadmin: =>
+    _wrap: (func, returnValue=true) =>
         playerMeta = FindMetaTable "Player"
-        originalIsSuper = playerMeta.IsSuperAdmin
+        original = playerMeta[func]
 
-        playerMeta.IsSuperAdmin = (ply) ->
+        playerMeta[func] = (ply) ->
             steamId = ply\SteamID64!
             expiration = @sessions[steamId]
 
-            return originalIsSuper ply unless expiration
-            return true unless os.time! >= expiration
+            return original(ply) unless expiration
+            return returnValue unless os.time! >= expiration
 
             @sessions[steamId] = nil
-            originalIsSuper ply
+            original(ply)
 
+    _wrapFunctions: =>
+        @_wrap "IsAdmin"
+        @_wrap "IsSuperAdmin"
+
+        @_wrap "CheckGroup"
+        @_wrap "GetUserGroup", "superadmin"
         @wrapped = true
 
     add: (ply) =>
-        @_wrapSuperadmin! unless @wrapped
+        @_wrapFunctions! unless @wrapped
         @sessions[ply\SteamID64!] = os.time! + @duration
 
 SudoManager!

@@ -78,9 +78,7 @@ class ExchangeManager
         targetSteamID = target\SteamID64!
         session = @sessions[targetSteamID]
 
-        return true if session.attempts <= @maxAttempts
-
-        false
+        return session.attempts < @maxAttempts
 
     -- If the token is wrong, something is sus
     -- TODO: Webhook if incorrect token
