@@ -78,6 +78,11 @@ The [`lua` branch](https://github.com/CFC-Servers/gm_sudo/tree/lua) is a lua-onl
 git clone --single-branch --branch lua git@github.com:CFC-Servers/gm_sudo.git
 ```
 
+### Dependencies
+`gm_sudo` uses [CFCLogger](https://github.com/CFC-Servers/cfc_logger) as its logger, but is able to function without it.
+
+Adding CFCLogger will allow you to configure which "level" of logging you want to see (pretty noisy by default).
+
 ## Use
 
 ### Creating a Sudo account
