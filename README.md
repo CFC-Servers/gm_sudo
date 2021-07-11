@@ -2,6 +2,8 @@
 
 # Intro
 
+**FYI: This addon currently only works on Linux. The SHA implementation used in `gm_sudo` doesn't work on Windows for some reason. This is a problem we intend to fix ASAP
+
 **Background:**
 In Linux, a superuser is a user who can run any command at the highest permission level, never limited by permissions (just like the `root` user).
 
