@@ -68,9 +68,17 @@ If you're a smaller server, `gm_sudo` can help keep you safer, but may not be as
  - Passwords are salted
  - Passwords never stored plainly in a variable
 
-# Use
-_(FIXME: Include installation instructions for moonscript addon)_
+## Installation
+Simply download a copy of the zip, or clone the repository straight into your addons folder! 
 
+Pre-compiled versions are available in **[Releases](https://github.com/CFC-Servers/gm_sudo/releases/)**
+
+The [`lua` branch](https://github.com/CFC-Servers/gm_sudo/tree/lua) is a lua-only branch containing the compiled code from the most recent release. One can use this to easily keep `gm_sudo` up to date.
+```sh
+git clone --single-branch --branch lua git@github.com:CFC-Servers/gm_sudo.git
+```
+
+# Use
 Anyone with rcon (or direct terminal) access to the server can use the `sudoadd <steamid>` command:
 ```
 sudoadd "STEAM_1:0:21170873"
@@ -80,9 +88,6 @@ The targeted user will be prompted to enter a password. Once they hit `enter`, t
 
 Now that the user has a `gm_sudo` account, they can run the `sudo` command locally, where they're prompted to enter their password. Once they submit the correct password, they'll be allowed to perform any action requiring `superadmin` access.
 
-And that's it!
-
----
 
 If a user forgets their password, you can simply run `sudoadd` again, and the password they enter will overwrite their previous password.
 
