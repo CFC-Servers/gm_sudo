@@ -19,8 +19,6 @@ Colors =
     white: Color 255, 255, 255, 255
 
 TimeDisplay =
-    Init: => -- no-op
-
     Setup: (lifetime) =>
         @lifetime = lifetime
         @startTime = RealTime!

@@ -14,8 +14,6 @@ local ExchangePanel
 local StatusPanel
 
 SudoPasswordPanel =
-    Init: => -- no-op
-
     Setup: (@token, @lifetime, @maxAttempts, @attemptCount, @responseMessage, @showLifetime=true, @showAttempts=true) =>
         w, h = 512, 192
 

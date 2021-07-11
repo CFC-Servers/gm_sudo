@@ -7,8 +7,6 @@ Colors =
     lightRed: Color 255, 50, 50, 255
 
 AttemptDisplay =
-    Init: => -- no-op
-
     Setup: (maxAttempts, attemptCount) =>
         @maxAttempts = maxAttempts
         @attemptCount = attemptCount
