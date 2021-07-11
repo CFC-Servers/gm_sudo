@@ -1,6 +1,6 @@
 # GMod Sudo
 
-# Intro
+## Intro
 
 **FYI: This addon currently only works on Linux. The SHA implementation used in `gm_sudo` doesn't work on Windows for some reason. This is a problem we intend to fix ASAP**
 
@@ -60,7 +60,7 @@ It only requires them to enter a password but, still, it's a barrier to doing th
 If you're a smaller server, `gm_sudo` can help keep you safer, but may not be as valuable.
 
 
-# Security features
+## Security features
  - Nothing in the global scope
  - Each step of the transaction protected by tokens
  - Limited time to enter password
@@ -78,7 +78,7 @@ The [`lua` branch](https://github.com/CFC-Servers/gm_sudo/tree/lua) is a lua-onl
 git clone --single-branch --branch lua git@github.com:CFC-Servers/gm_sudo.git
 ```
 
-# Use
+## Use
 Anyone with rcon (or direct terminal) access to the server can use the `sudoadd <steamid>` command:
 ```
 sudoadd "STEAM_1:0:21170873"
