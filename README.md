@@ -1,4 +1,5 @@
 # GMod Sudo
+![gmod_Lo7Altcphd](https://user-images.githubusercontent.com/7936439/125209884-f627da00-e250-11eb-90de-be23e4d2bf10.png)
 
 ## Intro
 
