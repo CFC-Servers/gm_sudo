@@ -10,7 +10,6 @@ class EncryptionInterface
         @sha = include "includes/modules/sha2.lua"
 
     encrypt: (data) =>
-        print "(encrypt) Using: #{encryptionSetting\GetString!}"
         @sha[encryptionSetting\GetString!] data
 
     digest: (password) =>
@@ -20,9 +19,6 @@ class EncryptionInterface
         @encrypt("#{password}#{generatedSalt}"), generatedSalt
 
     verify: (password, digest, salt="") =>
-        Logger\debug "Verifying digest: #{digest}"
-
-        print "(verify) Using: #{encryptionSetting\GetString!}"
         digest == @encrypt("#{password}#{salt}")
 
 EncryptionInterface!
