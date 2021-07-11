@@ -79,6 +79,8 @@ git clone --single-branch --branch lua git@github.com:CFC-Servers/gm_sudo.git
 ```
 
 ## Use
+
+### Creating a Sudo account
 Anyone with rcon (or direct terminal) access to the server can use the `sudoadd <steamid>` command:
 ```
 sudoadd "STEAM_1:0:21170873"
@@ -86,9 +88,36 @@ sudoadd "STEAM_1:0:21170873"
 
 The targeted user will be prompted to enter a password. Once they hit `enter`, the server will receive, encrypt, salt, and store the password.
 
+
+### Logging in
 Now that the user has a `gm_sudo` account, they can run the `sudo` command locally, where they're prompted to enter their password. Once they submit the correct password, they'll be allowed to perform any action requiring `superadmin` access.
 
 
+### Re-issuing a password
 If a user forgets their password, you can simply run `sudoadd` again, and the password they enter will overwrite their previous password.
 
+### Remove a Sudo account
 If you need to remove a user, you can run `sudoremove "steamid"` (works the same way as `sudoadd`, but in reverse) to remove their `gm_sudo` account.
+
+### Configuring
+This addon comes with one config variable:
+ - `gm_sudo_encryption_method`
+
+Which can be one of the following (default: `sha512`):
+- `md5`
+- `sha1`
+- `sha224`
+- `sha256`
+- `sha512_224`
+- `sha512_256`
+- `sha384`
+- `sha512`
+- `sha3_224`
+- `sha3_256`
+- `sha3_384`
+- `sha3_512`
+- `shake128`
+- `shake256`
+
+### Hooks
+TODO
