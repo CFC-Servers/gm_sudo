@@ -69,7 +69,7 @@ If you're a smaller server, `gm_sudo` can help keep you safer, but may not be as
 ## Installation
 **FYI: This addon currently only works on Linux. The SHA implementation used in `gm_sudo` doesn't work on Windows for some reason. This is a problem we intend to fix ASAP**
 
-Simply download a copy of the zip, or clone the repository straight into your addons folder! 
+Simply download a copy of the zip, or clone the repository straight into your addons folder!
 
 Pre-compiled versions are available in **[Releases](https://github.com/CFC-Servers/gm_sudo/releases/)**
 
@@ -100,8 +100,10 @@ If a user forgets their password, you can simply run `sudoadd` again, and the pa
 If you need to remove a user, you can run `sudoremove "steamid"` (works the same way as `sudoadd`, but in reverse) to remove their `gm_sudo` account.
 
 ### Configuring
-This addon comes with one convar:
- - `gm_sudo_encryption_method`
+This addon comes with the following Convars:
+
+
+#### `gm_sudo_encryption_method`
 
 Which can be one of the following (default: `sha512`):
 - `md5`
@@ -118,6 +120,10 @@ Which can be one of the following (default: `sha512`):
 - `sha3_512`
 - `shake128`
 - `shake256`
+
+#### `gm_sudo_session_length`
+
+An integer representing the number of seconds a Sudo session should last before the user must re-authenticate.
 
 ### Hooks
 TODO

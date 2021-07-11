@@ -1,7 +1,10 @@
+duration = CreateConVar "gm_sudo_session_length", 30*60, FCVAR_REPLICATED, "How many seconds should each Sudo session last", 0
+
 class SudoManager
-    new: (@duration=30*60)=>
+    new: =>
         @sessions = {}
         @wrapped = false
+        @duration = duration\GetInt!
 
     _wrap: (func, returnValue=true) =>
         playerMeta = FindMetaTable "Player"
