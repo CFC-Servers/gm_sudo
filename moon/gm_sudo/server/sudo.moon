@@ -71,3 +71,9 @@ concommand.Add "sudoadd", (ply, cmd, args) ->
     target = GetBySteamID steamId
 
     Sudo.SignUpManager\start target
+
+concommand.Add "sudoremove", (ply, cmd, args) ->
+    return if IsValid ply
+
+    steamId = args[1]
+    Sudo.SignUpManager\removeUser steamId
