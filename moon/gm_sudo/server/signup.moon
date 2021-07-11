@@ -29,4 +29,11 @@ class SignUpManager extends ExchangeManager
         hook.Run "GmodSudo_PostPlayerSignUp"
         @onSuccess and @onSuccess target
 
+    removeUser: (target) =>
+        Logger\debug "Deleting: #{target}"
+        res = UserStorage\delete target
+        Logger\info "'#{target}' has been deleted"
+
+        res
+
 SignUpManager!
