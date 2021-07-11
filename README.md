@@ -100,7 +100,7 @@ If a user forgets their password, you can simply run `sudoadd` again, and the pa
 If you need to remove a user, you can run `sudoremove "steamid"` (works the same way as `sudoadd`, but in reverse) to remove their `gm_sudo` account.
 
 ### Configuring
-This addon comes with one config variable:
+This addon comes with one convar:
  - `gm_sudo_encryption_method`
 
 Which can be one of the following (default: `sha512`):
