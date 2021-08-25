@@ -1,10 +1,10 @@
 AddCSLuaFile!
-require "cfclogger"
+require "logger"
 
 export Sudo = {}
 
-if CFCLogger
-    Sudo.Logger = CFCLogger "Sudo"
+if Logger
+    Sudo.Logger = Logger "Sudo"
 else
     log = (level) ->
         (_, ...) ->
