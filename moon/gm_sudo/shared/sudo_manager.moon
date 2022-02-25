@@ -24,7 +24,7 @@ class SudoManager
         @_wrap "IsAdmin"
         @_wrap "IsSuperAdmin"
 
-        @_wrap "CheckGroup"
+        --@_wrap "CheckGroup"
         @_wrap "GetUserGroup", "superadmin" if SERVER
 
         @wrapped = true
