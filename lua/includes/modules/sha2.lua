@@ -36,12 +36,6 @@ local E
 if z then
 	D = bit
 	E = "bit"
-	local F, G = pcall(require, "ffi")
-
-	if F then
-		C = G
-	end
-
 	A = not RunString("b=0b0", "is_LuaJIT_21")
 	B = type(jit) == "table" and jit.arch or C and C.arch or nil
 else
