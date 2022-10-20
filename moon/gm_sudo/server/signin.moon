@@ -18,7 +18,7 @@ class SignInManager extends ExchangeManager
         "GmodSudo_SignInTimeout_#{target\SteamID64!}"
 
     _verifyPassword: (target, password) =>
-        Logger\debug "Verifying password in SignInManager for #{target}"
+        Logger\info "Verifying password in SignInManager for #{target}"
 
         target = target\SteamID64!
         data = UserStorage\get target
@@ -30,7 +30,7 @@ class SignInManager extends ExchangeManager
         )
 
     receiveResponse: (target) =>
-        Logger\debug "Received response in SignInManager for #{target}"
+        Logger\info "Received response in SignInManager for #{target}"
 
         passesValidations = super(target) == true
 
@@ -40,12 +40,12 @@ class SignInManager extends ExchangeManager
             Logger\debug "Passes validations"
 
             if validPassword
-                Logger\debug "Given a valid password, allowing access to #{target}"
+                Logger\info "Given a valid password, allowing access to #{target}"
                 @remove target
 
                 return @onSuccess target
 
-        Logger\debug "Validations did not pass or given password was incorrect, failed attempt"
+        Logger\warn "Validations did not pass or given password was incorrect, failed attempt"
 
         @onFailedAttempt target
         @start target
