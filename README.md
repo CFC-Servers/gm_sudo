@@ -68,8 +68,6 @@ If you're a smaller server, `gm_sudo` can help keep you safer, but may not be as
  - Passwords never stored plainly in a variable
 
 ## Installation
-**FYI: This addon currently only works on Linux. The SHA implementation used in `gm_sudo` doesn't work on Windows for some reason. This is a problem we intend to fix ASAP**
-
 Simply download a copy of the zip, or clone the repository straight into your addons folder!
 
 Pre-compiled versions are available in **[Releases](https://github.com/CFC-Servers/gm_sudo/releases/)**
