@@ -1,0 +1,6 @@
+local NetMessages = include("gm_sudo/shared/net_messages.lua")
+local Manager = include("gm_sudo/shared/sudo_manager.lua")
+return net.Receive(NetMessages.addSudoPlayer, function()
+  local target = net.ReadEntity()
+  return Manager:add(target)
+end)
