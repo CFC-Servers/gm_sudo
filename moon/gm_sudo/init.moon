@@ -18,9 +18,6 @@ else
         error: error
         fatal: error
 
-    Sudo.Logger\warn "GM_Logger not found, using fallback logger."
-    Sudo.Logger\warn "Consider installing: github.com/CFC-Servers/gm_logger"
-
 if SERVER
     include "gm_sudo/server/init.lua"
 
@@ -36,9 +33,7 @@ if SERVER
     AddCSLuaFile "gm_sudo/client/elements/password_input.lua"
     AddCSLuaFile "gm_sudo/client/elements/time_display.lua"
 
-    resource.AddSingleFile "materials/gm_sudo/success.png"
-    resource.AddSingleFile "materials/gm_sudo/hourglass.png"
-    resource.AddSingleFile "sound/gm_sudo/access_granted.mp3"
+    resource.AddWorkshop "3114942472"
 
 if CLIENT
     include "gm_sudo/client/init.lua"
