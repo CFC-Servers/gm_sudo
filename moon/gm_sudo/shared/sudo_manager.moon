@@ -3,7 +3,7 @@ duration = CreateConVar "gm_sudo_session_length", 30*60, FCVAR_REPLICATED, "How 
 class SudoManager
     new: =>
         @sessions = {}
-        @wrapped = false
+        @ready = false
         @duration = duration\GetInt!
 
     _wrap: (func, returnValue=true) =>
@@ -20,17 +20,27 @@ class SudoManager
             @sessions[steamId] = nil
             original(ply)
 
-    _wrapFunctions: =>
+    _setup: =>
         @_wrap "IsAdmin"
         @_wrap "IsSuperAdmin"
 
         --@_wrap "CheckGroup"
         @_wrap "GetUserGroup", "superadmin" if SERVER
 
-        @wrapped = true
+        hook.Add "CAMI.PlayerHasAccess", "GmodSudo_CAMI", (ply, privilege, callback) ->
+            return unless @sessions[ply\SteamID64!]
+            callback true
+            return true
+
+        hook.Add "CAMI.SteamIDHasAccess", "GmodSudo_CAMI", (steamID, privilege, callback) ->
+            return unless @sessions[util.SteamIDTo64 steamID]
+            callback true
+            return true
+
+        @ready = true
 
     add: (ply) =>
-        @_wrapFunctions! unless @wrapped
+        @_setup! unless @ready
         @sessions[ply\SteamID64!] = os.time! + @duration
 
 SudoManager!
